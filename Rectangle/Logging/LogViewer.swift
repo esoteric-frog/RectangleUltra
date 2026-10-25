@@ -49,7 +49,7 @@ extension LogWindowController {
             contentRect: NSRect(x: 245, y: 301, width: 480, height: 270),
             styleMask: [.titled, .closable, .miniaturizable, .resizable],
             backing: .buffered, defer: true)
-        window.title = "Rectangle Logging"
+        window.title = "Rectangle Ultra Logging"
         window.isReleasedWhenClosed = false
         window.minSize = NSSize(width: 100, height: 50)
         window.contentViewController = LogViewController()

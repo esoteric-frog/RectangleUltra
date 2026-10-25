@@ -24,7 +24,7 @@ struct WelcomeView: View {
                     finishSelection(usingRecommended: true)
                 }) {
                     HStack(spacing: 6) {
-                        Image("StatusTemplate")
+                        Image(nsImage: NSImage(named: "StatusTemplate") ?? NSImage())
                             .renderingMode(.template)
                         Text("Recommended")
                     }

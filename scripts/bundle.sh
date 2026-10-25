@@ -15,7 +15,7 @@ sed -e 's/$(DEVELOPMENT_LANGUAGE)/en/' \
     -e 's/$(PRODUCT_BUNDLE_IDENTIFIER)/local.rectangleultra/' \
     -e 's/$(PRODUCT_NAME)/Rectangle Ultra/' \
     -e 's/$(MARKETING_VERSION)/0.1.0/' \
-    -e 's/$(CURRENT_PROJECT_VERSION)/1/' \
+    -e 's/$(CURRENT_PROJECT_VERSION)/112/' \
     -e 's/$(MACOSX_DEPLOYMENT_TARGET)/14.0/' \
     Rectangle/Info.plist > "$APP/Contents/Info.plist"
 plutil -replace CFBundleIconFile -string AppIcon "$APP/Contents/Info.plist"

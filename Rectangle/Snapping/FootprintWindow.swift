@@ -154,7 +154,7 @@ class FootprintWindow: NSWindow {
          accessibility: @escaping () -> FootprintAccessibility = { .current }) {
         self.accessibility = accessibility
         super.init(contentRect: initialFrame, styleMask: .borderless, backing: .buffered, defer: false)
-        title = "Rectangle"
+        title = "Rectangle Ultra"
         colorSpace = .sRGB
         isOpaque = false
         backgroundColor = .clear

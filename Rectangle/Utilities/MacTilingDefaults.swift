@@ -77,9 +77,9 @@ enum MacTilingDefaults: String {
     private static func resolveStandardTilingConflict() {
         let result = AlertUtil.threeButtonAlert(
             question: String(localized: "Conflict with macOS tiling"),
-            text: String(localized: "Drag to screen edge tiling is enabled in both Rectangle and macOS."),
+            text: String(localized: "Drag to screen edge tiling is enabled in both Rectangle Ultra and macOS."),
             buttonOneText: String(localized: "Disable in macOS"),
-            buttonTwoText: String(localized: "Disable in Rectangle"),
+            buttonTwoText: String(localized: "Disable in Rectangle Ultra"),
             buttonThreeText: String(localized: "Dismiss"))
         switch result {
         case .alertFirstButtonReturn:
@@ -97,7 +97,7 @@ enum MacTilingDefaults: String {
             Notification.Name.windowSnapping.post(object: false)
 
             let result = AlertUtil.twoButtonAlert(
-                question: String(localized: "Tiling in Rectangle has been disabled"),
+                question: String(localized: "Tiling in Rectangle Ultra has been disabled"),
                 text: String(localized: "To adjust macOS tiling, go to System Settings → Desktop & Dock → Windows"),
                 cancelText: String(localized: "Open System Settings"))
             if result == .alertSecondButtonReturn {
