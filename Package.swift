@@ -20,7 +20,7 @@ let package = Package(
             exclude: [
                 "Info.plist", "InternetAccessPolicy.plist",
                 "Rectangle.entitlements", "RectangleRelease.entitlements",
-                "Assets.xcassets", "AppIcon.icon", "Localizable.xcstrings",
+                "Assets.xcassets",
             ],
             swiftSettings: [.swiftLanguageMode(.v5)]
         ),
