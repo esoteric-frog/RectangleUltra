@@ -1,3 +1,16 @@
+# Rectangle Ultra
+
+Personal, local-only build of [Rectangle](https://github.com/rxhanson/Rectangle) (MIT),
+with Rectangle Pro–style features rebuilt from scratch. Not distributed. Never pushed.
+
+- Quit Rectangle and Rectangle Pro before running Max (they use the same shortcuts).
+- Ad-hoc signed: after every rebuild, macOS asks for Accessibility permission again.
+  Remove the old "Rectangle Ultra" entry in System Settings → Privacy & Security →
+  Accessibility, then allow the new one.
+- Spec and plans: `docs/superpowers/`.
+
+---
+
 # Rectangle
 
 English | [简体中文](README.zh-Hans.md)
