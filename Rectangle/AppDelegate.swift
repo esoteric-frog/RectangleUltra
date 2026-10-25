@@ -1,7 +1,6 @@
 /// AppDelegate.swift
 
 import Cocoa
-import Sparkle
 import os.log
 
 @main
@@ -10,12 +9,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private let accessibilityAuthorization = AccessibilityAuthorization()
     private let statusItem = RectangleStatusItem.instance
     static let windowHistory = WindowHistory()
-    var updaterController: SPUStandardUpdaterController!
-    var hasPendingUpdate = false {
-        didSet {
-            Notification.Name.updateAvailability.post()
-        }
-    }
 
     private var shortcutManager: ShortcutManager!
     private var windowManager: WindowManager!
@@ -37,7 +30,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var unauthorizedMenu: NSMenu!
     @IBOutlet weak var ignoreMenuItem: NSMenuItem!
     @IBOutlet weak var viewLoggingMenuItem: NSMenuItem!
-    @IBOutlet weak var updatesMenuItem: NSMenuItem!
     @IBOutlet weak var quitMenuItem: NSMenuItem!
     
     static var instance: AppDelegate {
@@ -75,12 +67,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         NotificationCenter.default.addObserver(self, selector: #selector(rebuildMenu), name: .showAdditionalSizesInMenuChanged, object: nil)
 
-        updaterController = SPUStandardUpdaterController(updaterDelegate: nil, userDriverDelegate: self)
-        
-        checkAutoCheckForUpdates()
-        
         Notification.Name.configImported.onPost(using: { _ in
-            self.checkAutoCheckForUpdates()
             self.statusItem.refreshVisibility()
             self.applicationToggle.reloadFromDefaults()
             self.shortcutManager.reloadFromDefaults()
@@ -128,18 +115,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 item.image = NSImage(systemSymbolName: "gear", accessibilityDescription: nil)
             case #selector(viewLogging):
                 item.image = NSImage(systemSymbolName: "doc.text", accessibilityDescription: nil)
-            case #selector(checkForUpdates):
-                item.image = NSImage(systemSymbolName: "arrow.down.circle", accessibilityDescription: nil)
             default:
                 break
             }
         }
     }
 
-    func checkAutoCheckForUpdates() {
-        updaterController.updater.automaticallyChecksForUpdates = Defaults.SUEnableAutomaticChecks.enabled
-    }
-    
     func accessibilityTrusted() {
         self.windowCalculationFactory = WindowCalculationFactory()
         self.windowManager = WindowManager()
@@ -278,10 +259,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
             applicationToggle.disableApp()
         }
-    }
-    
-    @IBAction func checkForUpdates(_ sender: Any) {
-        updaterController.checkForUpdates(sender)
     }
     
     @IBAction func authorizeAccessibility(_ sender: Any) {
@@ -666,27 +643,5 @@ extension AppDelegate {
                 }
             }
         }
-    }
-}
-
-extension AppDelegate: SPUStandardUserDriverDelegate {
-    
-    var supportsGentleScheduledUpdateReminders: Bool {
-        true
-    }
-
-    func standardUserDriverShouldHandleShowingScheduledUpdate(_ update: SUAppcastItem, andInImmediateFocus immediateFocus: Bool) -> Bool {
-        if immediateFocus {
-            return true
-        }
-        
-        self.hasPendingUpdate = true
-        updatesMenuItem.title = String(localized: "Update Available…")
-        return false
-    }
-    
-    func standardUserDriverWillFinishUpdateSession() {
-        self.hasPendingUpdate = false
-        updatesMenuItem.title = String(localized: "Check for Updates…")
     }
 }

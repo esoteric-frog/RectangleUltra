@@ -20,13 +20,6 @@ final class AppSettingsViewModel {
         }
     }
 
-     var checkForUpdatesAutomatically: Bool {
-        didSet {
-            AppDelegate.instance.updaterController?.updater.automaticallyChecksForUpdates = checkForUpdatesAutomatically
-        }
-    }
-
-     var hasPendingUpdate: Bool = false
      var versionString: String = ""
 
      var allowAnyShortcut: Bool {
@@ -40,8 +33,6 @@ final class AppSettingsViewModel {
     init() {
         self.launchOnLogin = Defaults.launchOnLogin.enabled
         self.hideMenuBarIcon = Defaults.hideMenuBarIcon.enabled
-        self.checkForUpdatesAutomatically = AppDelegate.instance.updaterController?.updater.automaticallyChecksForUpdates ?? false
-        self.hasPendingUpdate = AppDelegate.instance.hasPendingUpdate
         self.allowAnyShortcut = Defaults.allowAnyShortcut.enabled
 
         let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
@@ -56,10 +47,6 @@ final class AppSettingsViewModel {
             self?.hideMenuBarIcon = true
         }
 
-        Notification.Name.updateAvailability.onPost { [weak self] _ in
-            self?.hasPendingUpdate = AppDelegate.instance.hasPendingUpdate
-        }
-
         Notification.Name.configImported.onPost { [weak self] _ in
             self?.reloadFromDefaults()
         }
@@ -69,10 +56,6 @@ final class AppSettingsViewModel {
         self.launchOnLogin = Defaults.launchOnLogin.enabled
         self.hideMenuBarIcon = Defaults.hideMenuBarIcon.enabled
         self.allowAnyShortcut = Defaults.allowAnyShortcut.enabled
-    }
-
-    func checkForUpdates() {
-        AppDelegate.instance.updaterController?.checkForUpdates(nil)
     }
 
     func restoreDefaults() {

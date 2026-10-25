@@ -30,13 +30,13 @@ struct AppSettingsView: View {
 
     var body: some View {
         Form {
-            // MARK: - App & Updates
+            // MARK: - App
             Section {
                 Toggle("Launch on login", isOn: $viewModel.launchOnLogin)
                 Toggle("Hide menu bar icon", isOn: $viewModel.hideMenuBarIcon)
 
                 if viewModel.hideMenuBarIcon {
-                    Text("When the menu bar icon is hidden, relaunch Rectangle from Finder to open")
+                    Text("When the menu bar icon is hidden, relaunch Rectangle Ultra from Finder to open")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -44,15 +44,11 @@ struct AppSettingsView: View {
             
             Section {
                 HStack {
-                    Button(viewModel.hasPendingUpdate ? "Update Available…" : "Check for Updates…") {
-                        viewModel.checkForUpdates()
-                    }
                     Spacer()
                     Text(viewModel.versionString)
                         .foregroundColor(.secondary)
                         .font(.callout)
                 }
-                Toggle("Check for updates automatically", isOn: $viewModel.checkForUpdatesAutomatically)
             }
 
             Section {

@@ -220,7 +220,6 @@
                         <outlet property="mainStatusMenu" destination="6wc-Rn-2EG" id="UWt-be-ZH1"/>
                         <outlet property="quitMenuItem" destination="A66-A4-cGD" id="Vul-Dd-RcH"/>
                         <outlet property="unauthorizedMenu" destination="HZt-qn-3MK" id="c4f-hw-GWr"/>
-                        <outlet property="updatesMenuItem" destination="HIK-3r-i7E" id="UGJ-IC-qKI"/>
                         <outlet property="viewLoggingMenuItem" destination="O8K-y6-bva" id="31H-se-kyh"/>
                     </connections>
                 </customObject>
@@ -251,12 +250,6 @@
                             <modifierMask key="keyEquivalentModifierMask"/>
                             <connections>
                                 <action selector="viewLogging:" target="Voe-Tx-rLC" id="8cH-2P-yKC"/>
-                            </connections>
-                        </menuItem>
-                        <menuItem title="Check for Updates…" id="HIK-3r-i7E">
-                            <modifierMask key="keyEquivalentModifierMask"/>
-                            <connections>
-                                <action selector="checkForUpdates:" target="Voe-Tx-rLC" id="kWZ-ie-6y9"/>
                             </connections>
                         </menuItem>
                         <menuItem title="Quit Rectangle" keyEquivalent="q" id="A66-A4-cGD">

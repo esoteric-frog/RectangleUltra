@@ -73,7 +73,6 @@ class Defaults {
     static let footprintBlur = BoolDefault(key: "footprintBlur")
     static let blurAppearance = IntEnumDefault<BlurAppearance>(key: "blurAppearance", defaultValue: .system)
 
-    static let SUEnableAutomaticChecks = BoolDefault(key: "SUEnableAutomaticChecks")
     static let todo = OptionalBoolDefault(key: "todo")
     static let todoMode = BoolDefault(key: "todoMode")
     static let todoApplication = StringDefault(key: "todoApplication")
@@ -187,7 +186,6 @@ class Defaults {
         footprintColor,
         footprintBlur,
         blurAppearance,
-        SUEnableAutomaticChecks,
         todo,
         todoMode,
         todoApplication,

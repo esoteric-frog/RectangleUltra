@@ -330,10 +330,6 @@ final class BehaviorSettingsViewModel {
         TodoManager.moveAllIfNeeded(false)
     }
     
-    func checkForUpdates() {
-        AppDelegate.instance.updaterController?.checkForUpdates(nil)
-    }
-    
     private func handleDoubleClickTitleBarToggle(_ enabled: Bool) {
         if enabled && !TitleBarManager.systemSettingDisabled {
             let openSettings = String(localized: "Open System Settings")
