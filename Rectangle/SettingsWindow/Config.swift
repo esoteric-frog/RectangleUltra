@@ -125,15 +125,15 @@ extension Defaults {
                 guard isSafe else {
                     AlertUtil.oneButtonAlert(
                         question: "Refused to load RectangleConfig.json",
-                        text: "The configuration file at \(path) is a symlink or world-writable. Rectangle has refused to load it. Remove the file or fix its permissions and try again."
+                        text: "The configuration file at \(path) is a symlink or world-writable. Rectangle Ultra has refused to load it. Remove the file or fix its permissions and try again."
                     )
                     try? fm.removeItem(at: configURL)
                     return
                 }
                 
                 let response = AlertUtil.twoButtonAlert(
-                    question: "Apply Rectangle configuration?",
-                    text: "A configuration file was found at \(path). Applying it will overwrite your current Rectangle shortcuts and preferences. Apply now?",
+                    question: "Apply Rectangle Ultra configuration?",
+                    text: "A configuration file was found at \(path). Applying it will overwrite your current Rectangle Ultra shortcuts and preferences. Apply now?",
                     confirmText: "Apply",
                     cancelText: "Discard"
                 )

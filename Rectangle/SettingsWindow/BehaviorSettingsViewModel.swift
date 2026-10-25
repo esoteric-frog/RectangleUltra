@@ -334,7 +334,7 @@ final class BehaviorSettingsViewModel {
         if enabled && !TitleBarManager.systemSettingDisabled {
             let openSettings = String(localized: "Open System Settings")
             let conflictTitleText = String(localized: "Conflict with system setting")
-            let conflictDescriptionText = String(localized: "To let Rectangle manage the title bar double click functionality, you need to disable the corresponding macOS setting.")
+            let conflictDescriptionText = String(localized: "To let Rectangle Ultra manage the title bar double click functionality, you need to disable the corresponding macOS setting.")
             let closeText = String(localized: "Close")
             
             Task {

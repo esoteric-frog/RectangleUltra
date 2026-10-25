@@ -445,8 +445,8 @@ struct TodoModeInfoView: View {
 
     private let steps: [Step] = [
         Step(id: 1, number: "1.", text: "Bring your chosen todo application frontmost"),
-        Step(id: 2, number: "2.", text: "In the Rectangle menu, select\n\"Use [Application] as Todo App\""),
-        Step(id: 3, number: "3.", text: "In the Rectangle menu, enable Todo Mode.")
+        Step(id: 2, number: "2.", text: "In the Rectangle Ultra menu, select\n\"Use [Application] as Todo App\""),
+        Step(id: 3, number: "3.", text: "In the Rectangle Ultra menu, enable Todo Mode.")
     ]
 
     var body: some View {
@@ -484,7 +484,7 @@ struct TodoModeInfoView: View {
             .background(Color(NSColor.controlBackgroundColor))
             .cornerRadius(8)
 
-            Text("While in Todo Mode, you can refresh the Todo Mode layout by selecting \"Reflow Todo\" in the Rectangle menu or executing the associated keyboard shortcut.")
+            Text("While in Todo Mode, you can refresh the Todo Mode layout by selecting \"Reflow Todo\" in the Rectangle Ultra menu or executing the associated keyboard shortcut.")
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.leading)

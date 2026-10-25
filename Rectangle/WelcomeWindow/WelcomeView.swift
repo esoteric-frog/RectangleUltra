@@ -9,7 +9,7 @@ struct WelcomeView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            Text("Welcome to Rectangle!")
+            Text("Welcome to Rectangle Ultra!")
                 .font(.largeTitle)
                 .bold()
             
