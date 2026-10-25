@@ -180,8 +180,6 @@ final class BehaviorSettingsViewModel {
     var showCombinedDisplayMode: Bool { !NSScreen.screensHaveSeparateSpaces }
     var stageCapable: Bool { StageUtil.stageCapable }
     
-    private var aboutTodoWindowController: NSWindowController?
-    
     // MARK: - Initialization
     init() {
         
@@ -350,14 +348,6 @@ final class BehaviorSettingsViewModel {
         }
         Defaults.doubleClickTitleBar.value = (enabled ? WindowAction.maximize.rawValue : -1) + 1
         Notification.Name.windowTitleBar.post()
-    }
-    
-    func showTodoModeHelp() {
-        if aboutTodoWindowController == nil {
-            aboutTodoWindowController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "AboutTodoWindowController") as? NSWindowController
-        }
-        NSApp.activate(ignoringOtherApps: true)
-        aboutTodoWindowController?.showWindow(nil)
     }
     
     func exportConfig() {

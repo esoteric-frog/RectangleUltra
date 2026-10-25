@@ -26,7 +26,7 @@ class Logger {
 
 class LogWindowController: NSWindowController, NSWindowDelegate {
 
-    @IBAction func clearClicked(_ sender: Any) {
+    @objc func clearClicked(_ sender: Any) {
         (contentViewController as? LogViewController)?.clear()
     }
     
@@ -42,24 +42,75 @@ class LogWindowController: NSWindowController, NSWindowDelegate {
 }
 
 extension LogWindowController {
-    // MARK: Storyboard instantiation
+    // Reproduces LogViewer.storyboard: 480x270 titled/closable/miniaturizable/resizable window,
+    // min size 100x50, "Clear" toolbar item (trash icon), non-editable text view in a vertical scroller.
     static func freshController() -> LogWindowController {
-        let storyboard = NSStoryboard(name: "LogViewer", bundle: nil)
-        let identifier = "LogWindowController"
-        guard let windowController = storyboard.instantiateController(withIdentifier: identifier) as? LogWindowController else {
-            fatalError("Unable to find WindowController")
-        }
-        
-        windowController.window?.delegate = windowController
-        
+        let window = NSWindow(
+            contentRect: NSRect(x: 245, y: 301, width: 480, height: 270),
+            styleMask: [.titled, .closable, .miniaturizable, .resizable],
+            backing: .buffered, defer: true)
+        window.title = "Rectangle Logging"
+        window.isReleasedWhenClosed = false
+        window.minSize = NSSize(width: 100, height: 50)
+        window.contentViewController = LogViewController()
+
+        let windowController = LogWindowController(window: window)
+        let toolbar = NSToolbar(identifier: "LogToolbar")
+        toolbar.delegate = windowController
+        toolbar.displayMode = .iconOnly
+        toolbar.allowsUserCustomization = false
+        toolbar.autosavesConfiguration = false
+        window.toolbar = toolbar
+        window.delegate = windowController
         return windowController
+    }
+}
+
+extension LogWindowController: NSToolbarDelegate {
+    private static let clearItemId = NSToolbarItem.Identifier("LogClear")
+
+    func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] { [Self.clearItemId] }
+    func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] { [Self.clearItemId] }
+
+    func toolbar(_ toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: NSToolbarItem.Identifier,
+                 willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
+        guard itemIdentifier == Self.clearItemId else { return nil }
+        let item = NSToolbarItem(itemIdentifier: itemIdentifier)
+        item.label = "Clear"
+        item.paletteLabel = "Clear"
+        item.image = NSImage(named: NSImage.trashEmptyName)
+        item.target = self
+        item.action = #selector(clearClicked(_:))
+        return item
     }
 }
 
 
 class LogViewController: NSViewController {
     
-    @IBOutlet var textView: NSTextView!
+    var textView: NSTextView!
+
+    override func loadView() {
+        let scrollView = NSScrollView(frame: NSRect(x: 0, y: 0, width: 480, height: 270))
+        scrollView.borderType = .noBorder
+        scrollView.hasVerticalScroller = true
+        scrollView.hasHorizontalScroller = false
+        scrollView.autoresizingMask = [.width, .height]
+        let text = KeyDownTextView(frame: scrollView.bounds)
+        text.minSize = NSSize(width: 480, height: 270)
+        text.maxSize = NSSize(width: 480, height: 10_000_000)
+        text.isVerticallyResizable = true
+        text.isHorizontallyResizable = false
+        text.autoresizingMask = [.width, .height]
+        text.isRichText = false
+        text.importsGraphics = false
+        text.textContainer?.widthTracksTextView = true
+        text.textColor = .textColor
+        text.backgroundColor = .textBackgroundColor
+        scrollView.documentView = text
+        textView = text
+        view = scrollView
+    }
     
     let font = NSFont(name:"Monaco", size: 10) ?? NSFont.systemFont(ofSize: 10)
     

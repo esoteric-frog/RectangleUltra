@@ -3,7 +3,6 @@
 import Cocoa
 import os.log
 
-@main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     private let accessibilityAuthorization = AccessibilityAuthorization()
@@ -26,11 +25,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var additionalSizeMenuItems: [NSMenuItem] = []
     private var dynamicMenuItemCount: Int = 0
 
-    @IBOutlet weak var mainStatusMenu: NSMenu!
-    @IBOutlet weak var unauthorizedMenu: NSMenu!
-    @IBOutlet weak var ignoreMenuItem: NSMenuItem!
-    @IBOutlet weak var viewLoggingMenuItem: NSMenuItem!
-    @IBOutlet weak var quitMenuItem: NSMenuItem!
+    var mainStatusMenu: NSMenu!
+    var unauthorizedMenu: NSMenu!
+    var ignoreMenuItem: NSMenuItem!
+    var viewLoggingMenuItem: NSMenuItem!
+    var quitMenuItem: NSMenuItem!
     
     static var instance: AppDelegate {
         NSApp.delegate as! AppDelegate
@@ -206,25 +205,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
         
-    private func showWelcomeWindow() {
-        let welcomeWindowController = NSStoryboard(name: "Main", bundle: nil)
-            .instantiateController(withIdentifier: "WelcomeWindowController") as? NSWindowController
-        guard let welcomeWindow = welcomeWindowController?.window else { return }
-        welcomeWindow.delegate = self
-        
-        NSApp.activate(ignoringOtherApps: true)
-        
-        let response = NSApp.runModal(for: welcomeWindow)
-        
-        let usingRecommended = response == .alertFirstButtonReturn || response == .abort
-        
-        Defaults.alternateDefaultShortcuts.enabled = usingRecommended
-        
-        Defaults.subsequentExecutionMode.value = usingRecommended ? .acrossMonitor : .resize
-        
-        welcomeWindowController?.close()
-    }
-    
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         if Defaults.relaunchOpensMenu.enabled {
             statusItem.openMenu()
@@ -234,7 +214,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
     
-    @IBAction func openPreferences(_ sender: Any) {
+    @objc func openPreferences(_ sender: Any) {
         if settingsWindowController == nil {
             let controller = SettingsWindowController()
             controller.onClose = { [weak self] in self?.settingsWindowController = nil }
@@ -244,16 +224,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         settingsWindowController?.showWindow(self)
     }
     
-    @IBAction func showAbout(_ sender: Any) {
+    @objc func showAbout(_ sender: Any) {
         NSApp.activate(ignoringOtherApps: true)
         NSApp.orderFrontStandardAboutPanel(sender)
     }
     
-    @IBAction func viewLogging(_ sender: Any) {
+    @objc func viewLogging(_ sender: Any) {
         Logger.showLogging(sender: sender)
     }
     
-    @IBAction func ignoreFrontMostApp(_ sender: NSMenuItem) {
+    @objc func ignoreFrontMostApp(_ sender: NSMenuItem) {
         if sender.state == .on {
             applicationToggle.enableApp()
         } else {
@@ -261,7 +241,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    @IBAction func authorizeAccessibility(_ sender: Any) {
+    @objc func authorizeAccessibility(_ sender: Any) {
         accessibilityAuthorization.showAuthorizationWindow()
     }
 

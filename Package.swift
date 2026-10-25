@@ -21,8 +21,6 @@ let package = Package(
                 "Info.plist", "InternetAccessPolicy.plist",
                 "Rectangle.entitlements", "RectangleRelease.entitlements",
                 "Assets.xcassets", "AppIcon.icon", "Localizable.xcstrings",
-                "Base.lproj", "mul.lproj",
-                "Logging/LogViewer.storyboard", "Popover/MessageView.xib",
             ],
             swiftSettings: [.swiftLanguageMode(.v5)]
         ),
