@@ -1,6 +1,6 @@
 /// AccessibilityElement.swift
 
-import Foundation
+import Cocoa
 
 class AccessibilityElement {
     fileprivate let wrappedElement: AXUIElement

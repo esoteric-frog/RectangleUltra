@@ -3,7 +3,7 @@
 //  Rectangle
 //
 
-import Foundation
+import Cocoa
 
 /// Opt-in (`repeatedMaximizeRestoresPrevious`): executing Maximize or Almost Maximize on a window that
 /// Rectangle has just put in that state restores the frame the window had right before, instead of

@@ -1,6 +1,6 @@
 /// CGExtension.swift
 
-import Foundation
+import Cocoa
 
 extension CGPoint {
     var screenFlipped: CGPoint {

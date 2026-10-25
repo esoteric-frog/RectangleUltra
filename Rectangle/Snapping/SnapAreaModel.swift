@@ -1,6 +1,6 @@
 /// SnapAreaModel.swift
 
-import Foundation
+import Cocoa
 
 class SnapAreaModel {
     static let instance = SnapAreaModel()

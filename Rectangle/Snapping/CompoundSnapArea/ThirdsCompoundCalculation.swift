@@ -1,6 +1,6 @@
 /// ThirdsCompoundCalculation.swift
 
-import Foundation
+import Cocoa
 
 struct ThirdsCompoundCalculation: CompoundSnapAreaCalculation {
     

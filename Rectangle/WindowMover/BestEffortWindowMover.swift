@@ -1,6 +1,6 @@
 /// BestEffortWindowMover.swift
 
-import Foundation
+import Cocoa
 
 enum WindowFrameBounds {
     static func constrained(_ frame: CGRect, to screenFrame: CGRect, gap: CGFloat) -> CGRect {

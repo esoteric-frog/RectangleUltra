@@ -1,6 +1,6 @@
 /// StandardWindowMover.swift
 
-import Foundation
+import Cocoa
 
 class StandardWindowMover: WindowMover {
     func moveWindow(toRect rect: CGRect, resultParameters: ResultParameters) {

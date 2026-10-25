@@ -1,6 +1,6 @@
 /// EighthsCompoundCalculation.swift
 
-import Foundation
+import Cocoa
 
 struct TopEighthsCompoundCalculation: CompoundSnapAreaCalculation {
 

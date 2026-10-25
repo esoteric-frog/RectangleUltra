@@ -1,6 +1,6 @@
 /// WindowUtil.swift
 
-import Foundation
+import Cocoa
 
 class WindowUtil {
     private static var windowListCache = TimeoutCache<[CGWindowID]?, [WindowInfo]>(timeout: 100)

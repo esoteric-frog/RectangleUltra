@@ -1,6 +1,7 @@
 /// AXExtension.swift
 
-import Foundation
+import Cocoa
+import CAXPrivate
 
 extension NSAccessibility.Attribute {
     static let enhancedUserInterface = NSAccessibility.Attribute(rawValue: "AXEnhancedUserInterface")

@@ -1,6 +1,6 @@
 /// SixthsCompoundCalculation.swift
 
-import Foundation
+import Cocoa
 
 struct TopSixthsCompoundCalculation: CompoundSnapAreaCalculation {
     

@@ -1,6 +1,6 @@
 /// FourthsCompoundCalculation.swift
 
-import Foundation
+import Cocoa
 
 struct FourthsColumnCompoundCalculation: CompoundSnapAreaCalculation {
     

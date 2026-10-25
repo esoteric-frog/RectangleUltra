@@ -1,4 +1,5 @@
 import Cocoa
+import CAXPrivate
 
 enum WindowAccessibilityLookup {
     enum Result {

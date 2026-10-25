@@ -1,6 +1,6 @@
 /// CompoundSnapArea.swift
 
-import Foundation
+import Cocoa
 
 enum CompoundSnapArea: Int, Codable {
     

@@ -1,6 +1,6 @@
 /// WindowHistory.swift
 
-import Foundation
+import Cocoa
 
 class WindowHistory {
     

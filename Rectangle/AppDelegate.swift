@@ -356,9 +356,11 @@ extension AppDelegate: NSMenuDelegate {
             guard !action.excludedFromMenu, let displayName = action.displayName else { continue }
             let newMenuItem = NSMenuItem(title: displayName, action: #selector(executeMenuWindowAction), keyEquivalent: "")
             newMenuItem.representedObject = action
+            #if false // API exists only in the macOS 27 SDK; the Command Line Tools SDK here lacks it
             if #available(macOS 27.0, *) {
                 newMenuItem.preferredImageVisibility = .visible
             }
+            #endif
             if !showAllActions, let category = action.category {
                 // When additional sizes are off, keep Thirds and Size as flat items
                 if submenuOnlyWhenAdditional.contains(category) && !showAdditional {

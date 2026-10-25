@@ -1,6 +1,6 @@
 /// OverlapOffsetGeometry
 
-import Foundation
+import Cocoa
 
 /// Geometry handling for the overlap offset: where a window lands when it arrives
 /// on a position other windows already occupy.

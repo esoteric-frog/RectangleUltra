@@ -1,6 +1,6 @@
 /// TitleBarManager.swift
 
-import Foundation
+import Cocoa
 
 class TitleBarManager {
     private var eventMonitor: EventMonitor!

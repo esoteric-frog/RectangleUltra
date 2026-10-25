@@ -1,6 +1,6 @@
 /// FixedSizeWindowMover.swift
 
-import Foundation
+import Cocoa
 
 /// Handle windows that are a fixed size. Align or center them according to `moveFixedSizeToEdge`.
 class FixedSizeWindowMover: WindowMover {

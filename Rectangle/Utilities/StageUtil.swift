@@ -1,6 +1,6 @@
 /// StageUtil.swift
 
-import Foundation
+import Cocoa
 
 class StageUtil {
     private static let windowManagerDefaults = UserDefaults(suiteName: "com.apple.WindowManager")

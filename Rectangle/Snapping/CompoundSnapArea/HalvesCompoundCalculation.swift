@@ -1,6 +1,6 @@
 /// HalvesCompoundCalculation.swift
 
-import Foundation
+import Cocoa
 
 struct LeftTopBottomHalfCalculation: CompoundSnapAreaCalculation {
     

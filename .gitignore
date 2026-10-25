@@ -34,3 +34,7 @@ build/
 *.dat
 *.dep
 
+
+## SwiftPM
+/.build/
+/build/

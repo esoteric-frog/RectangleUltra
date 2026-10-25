@@ -1,6 +1,6 @@
 /// MacTilingDefaults.swift
 
-import Foundation
+import Cocoa
 
 /// Read / disable the user defaults values for the macOS built-in window tiling, added in macOS 15 Sequoia.
 /// These are toggled in the Desktop & Dock System Settings Pane:
