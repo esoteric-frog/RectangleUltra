@@ -19,10 +19,12 @@ open class XCTestCase {
     public static func runTest<T: XCTestCase>(_ type: T.Type, _ body: @escaping (T) throws -> Void) async throws {
         let outcome: Outcome = await withCheckedContinuation { done in
             CFRunLoopPerformBlock(CFRunLoopGetMain(), CFRunLoopMode.commonModes.rawValue) {
+                // Save/restore: wait() spins this run loop, so another test's block can nest inside ours.
+                let outer = pendingFailures
                 pendingFailures = []
                 let thrown = run(T(), body)
                 done.resume(returning: Outcome(failures: pendingFailures ?? [], thrown: thrown))
-                pendingFailures = nil
+                pendingFailures = outer
             }
             CFRunLoopWakeUp(CFRunLoopGetMain())
         }
@@ -117,7 +119,7 @@ struct XCTUnwrapError: Error {}
 struct Failure { let comment: Comment; let location: SourceLocation }
 struct Outcome: @unchecked Sendable { let failures: [Failure]; let thrown: Error? }
 
-/// Non-nil while a sync test body runs on the main run loop (main thread only; tests run serially).
+/// Non-nil while a sync test body runs on the main run loop (main thread only; saved/restored per run).
 nonisolated(unsafe) var pendingFailures: [Failure]?
 
 func fail(_ text: String, _ message: String, _ file: StaticString, _ line: UInt) {
