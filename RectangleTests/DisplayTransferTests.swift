@@ -1,4 +1,4 @@
-import XCTest
+import XCTestShim
 import CoreGraphics
 @testable import Rectangle
 

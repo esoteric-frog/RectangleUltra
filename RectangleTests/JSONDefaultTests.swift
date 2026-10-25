@@ -1,6 +1,6 @@
 /// JSONDefaultTests.swift
 
-import XCTest
+import XCTestShim
 @testable import Rectangle
 
 class JSONDefaultTests: XCTestCase {

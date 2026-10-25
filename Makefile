@@ -13,6 +13,7 @@ install: app
 	ditto "build/Rectangle Ultra.app" "/Applications/Rectangle Ultra.app"
 	@echo "installed /Applications/Rectangle Ultra.app"
 test:
+	python3 scripts/gen_xctest_wrappers.py
 	swift test --no-parallel $(TESTFLAGS)
 clean:
 	rm -rf .build build

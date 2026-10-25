@@ -2,7 +2,7 @@
 
 import Carbon.HIToolbox
 import MASShortcut
-import XCTest
+import XCTestShim
 @testable import Rectangle
 
 final class AccessibilityWindowResolutionTests: XCTestCase {

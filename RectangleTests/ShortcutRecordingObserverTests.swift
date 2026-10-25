@@ -1,7 +1,7 @@
 /// ShortcutRecordingObserverTests.swift
 
 import MASShortcut
-import XCTest
+import XCTestShim
 @testable import Rectangle
 
 class ShortcutRecordingObserverTests: XCTestCase {

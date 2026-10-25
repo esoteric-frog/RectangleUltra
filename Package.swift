@@ -24,5 +24,10 @@ let package = Package(
             ],
             swiftSettings: [.swiftLanguageMode(.v5)]
         ),
+        .target(name: "XCTestShim", path: "Tests/XCTestShim",
+                swiftSettings: [.swiftLanguageMode(.v5)]),
+        .testTarget(name: "RectangleTests", dependencies: ["Rectangle", "XCTestShim"],
+                    path: "RectangleTests", exclude: ["Info.plist"],
+                    swiftSettings: [.swiftLanguageMode(.v5)]),
     ]
 )
