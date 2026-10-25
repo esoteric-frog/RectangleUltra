@@ -1,0 +1,18 @@
+CLT := /Library/Developer/CommandLineTools/Library/Developer
+TESTFLAGS := -Xswiftc -F$(CLT)/Frameworks -Xlinker -F$(CLT)/Frameworks \
+             -Xlinker -rpath -Xlinker $(CLT)/Frameworks -Xlinker -rpath -Xlinker $(CLT)/usr/lib
+
+.PHONY: app debug install test clean
+app:
+	scripts/bundle.sh release
+debug:
+	scripts/bundle.sh debug
+install: app
+	osascript -e 'quit app "Rectangle Ultra"' 2>/dev/null || true
+	rm -rf "/Applications/Rectangle Ultra.app"
+	ditto "build/Rectangle Ultra.app" "/Applications/Rectangle Ultra.app"
+	@echo "installed /Applications/Rectangle Ultra.app"
+test:
+	swift test --no-parallel $(TESTFLAGS)
+clean:
+	rm -rf .build build

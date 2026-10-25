@@ -8,6 +8,8 @@ with Rectangle Pro–style features rebuilt from scratch. Not distributed. Never
   Remove the old "Rectangle Ultra" entry in System Settings → Privacy & Security →
   Accessibility, then allow the new one.
 - Spec and plans: `docs/superpowers/`.
+- Build (no Xcode needed): `make app` · install: `make install` · tests: `make test`.
+- The shortcut recorder's text comes from `.build/`; keep the folder (don't `make clean`) or rebuild.
 
 ---
 
