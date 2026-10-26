@@ -2028,7 +2028,7 @@ final class BundleIdentityTests: XCTestCase {
     func testExportedConfigKeepsTheReleaseBundleIdentifier() throws {
         let json = try XCTUnwrap(Defaults.encoded())
         let config = try XCTUnwrap(Defaults.convert(jsonString: json))
-        XCTAssertEqual(config.bundleId, "com.knollsoft.Rectangle")
+        XCTAssertEqual(config.bundleId, "local.rectangleultra")
     }
 }
 

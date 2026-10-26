@@ -23,7 +23,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>rectangle</string>
+				<string>rectangle-ultra</string>
 			</array>
 		</dict>
 	</array>

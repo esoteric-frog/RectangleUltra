@@ -8,8 +8,8 @@ let package = Package(
         .executable(name: "RectangleUltra", targets: ["Rectangle"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/rxhanson/MASShortcut",
-                 revision: "2f9fbb3f959b7a683c6faaf9638d22afad37a235"),
+        // rxhanson/MASShortcut @ 2f9fbb3f, vendored: MASLocalization.m finds its bundle in Contents/Resources.
+        .package(path: "Vendor/MASShortcut"),
     ],
     targets: [
         .target(name: "CAXPrivate", path: "Sources/CAXPrivate"),

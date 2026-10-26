@@ -30,7 +30,7 @@ extension Defaults {
         }
         codableDefaults[footprintAlpha.key] = CodableDefault(double: effectiveFootprintAlpha)
                 
-        let config = Config(bundleId: "com.knollsoft.Rectangle",
+        let config = Config(bundleId: "local.rectangleultra",
                             version: version,
                             shortcuts: shortcuts,
                             defaults: codableDefaults)
@@ -95,7 +95,7 @@ extension Defaults {
     
     static func loadFromSupportDir() {
         if let rectangleSupportURL = getSupportDir()?
-            .appendingPathComponent("Rectangle", isDirectory: true) {
+            .appendingPathComponent("Rectangle Ultra", isDirectory: true) {
             
             let configURL = rectangleSupportURL.appendingPathComponent("RectangleConfig.json")
                         

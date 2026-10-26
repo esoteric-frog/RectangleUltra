@@ -9,7 +9,7 @@ BIN=$(swift build -c "$CONFIG" --show-bin-path)
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "$BIN/RectangleUltra" "$APP/Contents/MacOS/Rectangle Ultra"
-cp -R "$BIN"/*.bundle "$APP/Contents/Resources/" 2>/dev/null || true
+cp -R "$BIN/MASShortcut_MASShortcut.bundle" "$APP/Contents/Resources/"
 sed -e 's/$(DEVELOPMENT_LANGUAGE)/en/' \
     -e 's/$(EXECUTABLE_NAME)/Rectangle Ultra/' \
     -e 's/$(PRODUCT_BUNDLE_IDENTIFIER)/local.rectangleultra/' \

@@ -9,7 +9,6 @@ with Rectangle Pro–style features rebuilt from scratch. Not distributed. Never
   Accessibility, then allow the new one.
 - Spec and plans: `docs/superpowers/`.
 - Build (no Xcode needed): `make app` · install: `make install` · tests: `make test`.
-- The shortcut recorder's text comes from `.build/`; keep the folder (don't `make clean`) or rebuild.
 
 ---
 
@@ -99,21 +98,21 @@ To un-ignore an app that you have selected to ignore, simply bring that app fron
 
 ## Execute an action by URL
 
-Open the URL `rectangle://execute-action?name=[name]`. Do not activate Rectangle if possible.
+Open the URL `rectangle-ultra://execute-action?name=[name]`. Do not activate Rectangle if possible.
 
 Available values for `[name]`: `left-half`, `right-half`, `center-half`, `top-half`, `bottom-half`, `top-left`, `top-right`, `bottom-left`, `bottom-right`, `first-third`, `center-third`, `last-third`, `first-two-thirds`, `last-two-thirds`, `maximize`, `almost-maximize`, `maximize-height`, `smaller`, `larger`, `center`, `center-prominently`, `restore`, `next-display`, `previous-display`, `move-left`, `move-right`, `move-up`, `move-down`, `first-fourth`, `second-fourth`, `third-fourth`, `last-fourth`, `first-three-fourths`, `last-three-fourths`, `top-left-sixth`, `top-center-sixth`, `top-right-sixth`, `bottom-left-sixth`, `bottom-center-sixth`, `bottom-right-sixth`, `specified`, `reverse-all`, `top-left-ninth`, `top-center-ninth`, `top-right-ninth`, `middle-left-ninth`, `middle-center-ninth`, `middle-right-ninth`, `bottom-left-ninth`, `bottom-center-ninth`, `bottom-right-ninth`, `top-left-third`, `top-right-third`, `bottom-left-third`, `bottom-right-third`, `top-left-eighth`, `top-center-left-eighth`, `top-center-right-eighth`, `top-right-eighth`, `bottom-left-eighth`, `bottom-center-left-eighth`, `bottom-center-right-eighth`, `bottom-right-eighth`, `tile-all`, `tile-rows`, `tile-columns`, `cascade-all`, `cascade-active-app`, `cycle-stacked-windows`, `cycle-stacked-windows-backward`
 
-Example, from a shell: `open -g "rectangle://execute-action?name=left-half"`
+Example, from a shell: `open -g "rectangle-ultra://execute-action?name=left-half"`
 
 URLs can also be used to ignore/unignore apps. 
 
 ```
-rectangle://execute-task?name=ignore-app
-rectangle://execute-task?name=unignore-app
+rectangle-ultra://execute-task?name=ignore-app
+rectangle-ultra://execute-task?name=unignore-app
 ```
 A bundle identifier can also be specified, for example:
 ```
-rectangle://execute-task?name=ignore-app&app-bundle-id=com.apple.Safari
+rectangle-ultra://execute-task?name=ignore-app&app-bundle-id=com.apple.Safari
 ```
 
 ## Terminal Commands for Hidden Preferences
