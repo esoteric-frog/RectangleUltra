@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Try Rectangle Ultra</title>
+<meta name="description" content="A free, open-source macOS window manager. Try its shortcuts and drag-to-edge snapping right here in your browser.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="Try Rectangle Ultra in your browser">
+<meta property="og:description" content="Press Control-Option-Left. Drag a window to an edge. A free, open-source window manager for macOS.">
+<meta property="og:image" content="https://raw.githubusercontent.com/esoteric-frog/RectangleUltra/main/assets/readme/social-preview.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='100 100 824 824'%3E%3Crect x='100' y='100' width='824' height='824' rx='185' fill='%230F766E'/%3E%3Crect x='236' y='276' width='330' height='472' rx='40' fill='%23fff'/%3E%3Crect x='598' y='276' width='190' height='220' rx='36' fill='%235EEAD4'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --ground: #F4F7F7;
+    --surface: #E6EEED;
+    --surface-hover: #D7E4E2;
+    --ink: #0B1F24;
+    --ink-soft: #3D5559;
+    --accent: #0F766E;
+    --accent-ink: #FFFFFF;
+    --accent-hover: #0B5F59;
+    --hit: #5EEAD4;
+    --hit-ink: #0B1F24;
+    --wall: #0F766E;
+    --menubar: rgba(255,255,255,.78);
+    --menubar-ink: #0B1F24;
+    --win: #FFFFFF;
+    --win-bar: #EEF2F2;
+    --win-ink: #16282C;
+    --win-soft: #5B6E71;
+    --win-sel: #D7F5EF;
+    --term: #0E1B1E;
+    --term-ink: #CFEDE8;
+    --preview: rgba(94,234,212,.32);
+    --preview-edge: #0F766E;
+    --shadow: 0 10px 30px rgba(4,30,32,.28), 0 2px 6px rgba(4,30,32,.18);
+    --shadow-soft: 0 6px 18px rgba(4,30,32,.18);
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro", "Segoe UI", system-ui, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+    --move: 280ms;
+    --ease: cubic-bezier(.16, 1, .3, 1);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #081619; --surface: #11262A; --surface-hover: #193338; --ink: #E7F3F1; --ink-soft: #A5BDBA;
+      --accent: #5EEAD4; --accent-ink: #062024; --accent-hover: #8FF2E2; --hit: #5EEAD4; --hit-ink: #062024;
+      --wall: #0B3B3A; --menubar: rgba(10,30,33,.72); --menubar-ink: #E7F3F1;
+      --win: #1B2A2D; --win-bar: #23353A; --win-ink: #E3EFED; --win-soft: #9CB2AF; --win-sel: #1F4A47;
+      --term: #071113; --term-ink: #BDEBE3; --preview: rgba(94,234,212,.18); --preview-edge: rgba(94,234,212,.75);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #081619; --surface: #11262A; --surface-hover: #193338; --ink: #E7F3F1; --ink-soft: #A5BDBA;
+    --accent: #5EEAD4; --accent-ink: #062024; --accent-hover: #8FF2E2; --hit: #5EEAD4; --hit-ink: #062024;
+    --wall: #0B3B3A; --menubar: rgba(10,30,33,.72); --menubar-ink: #E7F3F1;
+    --win: #1B2A2D; --win-bar: #23353A; --win-ink: #E3EFED; --win-soft: #9CB2AF; --win-sel: #1F4A47;
+    --term: #071113; --term-ink: #BDEBE3; --preview: rgba(94,234,212,.18); --preview-edge: rgba(94,234,212,.75);
+    color-scheme: dark;
+  }
+  @media (prefers-reduced-motion: reduce) { :root { --move: 0ms; } }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font: 17px/1.5 var(--sans); }
+  ::selection { background: var(--hit); color: var(--hit-ink); }
+  a { color: inherit; text-underline-offset: 3px; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  .page {
+    max-width: 1520px; margin: 0 auto; padding: 40px 32px 0;
+    display: grid; gap: 40px 48px;
+    grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+    grid-template-areas: "intro demo" "keys demo";
+    align-items: start;
+  }
+  .intro { grid-area: intro; }
+  .demo { grid-area: demo; position: sticky; top: 24px; }
+  .keys { grid-area: keys; }
+
+  .intro svg { width: 76px; height: 76px; display: block; margin: -6px 0 18px -6px; }
+  h1 { font-size: clamp(2.5rem, 4vw, 3.6rem); line-height: 1; letter-spacing: -0.035em; font-weight: 700; margin: 0; text-wrap: balance; }
+  .pitch { font-size: 1.2rem; line-height: 1.4; margin: 16px 0 28px; max-width: 30ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; min-height: 46px; padding: 0 20px; border-radius: 999px;
+    font-weight: 600; font-size: 1rem; text-decoration: none; background: var(--surface); color: var(--ink);
+    transition: background-color 160ms, transform 160ms var(--ease);
+  }
+  .btn:hover { background: var(--surface-hover); }
+  .btn:active { transform: scale(.97); }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); }
+  .btn.primary:hover { background: var(--accent-hover); }
+  .meta { color: var(--ink-soft); font-size: .95rem; margin: 16px 0 0; }
+
+  /* The desktop */
+  .screen {
+    position: relative; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden;
+    background: var(--wall); user-select: none; -webkit-user-select: none;
+    container-type: inline-size;
+  }
+  .menubar {
+    position: absolute; inset: 0 0 auto 0; height: 26px; display: flex; align-items: center; gap: 16px;
+    padding: 0 12px; background: var(--menubar); color: var(--menubar-ink); font-size: 13px; z-index: 50;
+  }
+  .menubar b { font-weight: 700; }
+  .menubar .right { margin-left: auto; display: flex; align-items: center; gap: 12px; font-variant-numeric: tabular-nums; }
+  .menubar svg { width: 18px; height: 18px; display: block; }
+  .area { position: absolute; inset: 26px 0 0 0; }
+
+  .win {
+    position: absolute; display: flex; flex-direction: column; border-radius: 10px; overflow: hidden;
+    background: var(--win); color: var(--win-ink); box-shadow: var(--shadow-soft);
+    transition: left var(--move) var(--ease), top var(--move) var(--ease), width var(--move) var(--ease), height var(--move) var(--ease), box-shadow 160ms;
+    font-size: 12.5px; line-height: 1.45; outline-offset: -3px;
+  }
+  .win.active { box-shadow: var(--shadow); }
+  .win.dragging { transition: box-shadow 160ms; z-index: 60 !important; }
+  .bar {
+    flex: none; height: 30px; display: flex; align-items: center; gap: 7px; padding: 0 10px;
+    background: var(--win-bar); cursor: grab; touch-action: none;
+  }
+  .win.dragging .bar { cursor: grabbing; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; background: var(--win-soft); opacity: .35; flex: none; }
+  .win.active .dot:nth-child(1) { background: #FF5F57; opacity: 1; }
+  .win.active .dot:nth-child(2) { background: #FEBC2E; opacity: 1; }
+  .win.active .dot:nth-child(3) { background: #28C840; opacity: 1; }
+  .bar span:last-child { flex: 1; text-align: center; font-weight: 600; margin-right: 40px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--win-soft); }
+  .win.active .bar span:last-child { color: var(--win-ink); }
+  .body { flex: 1; overflow: hidden; padding: 12px 14px; }
+  .body p { margin: 0 0 8px; }
+  .body .t { font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+  .win.term { background: var(--term); color: var(--term-ink); }
+  .win.term .body { font-family: var(--mono); font-size: 12px; white-space: pre; }
+  .files { list-style: none; margin: 0; padding: 0; }
+  .files li { padding: 4px 6px; border-radius: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .files li:first-child { background: var(--win-sel); }
+  .files small { color: var(--win-soft); float: right; margin-left: 10px; }
+  .files li:first-child small { color: inherit; }
+
+  .preview {
+    position: absolute; border-radius: 10px; background: var(--preview); border: 2px solid var(--preview-edge);
+    opacity: 0; pointer-events: none; z-index: 40;
+    transition: left 160ms var(--ease), top 160ms var(--ease), width 160ms var(--ease), height 160ms var(--ease), opacity 140ms;
+  }
+  .preview.on { opacity: 1; }
+
+  .under { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 24px; margin-top: 14px; }
+  .under p { margin: 0; }
+  .hint { color: var(--ink-soft); max-width: 62ch; }
+  .status { font-weight: 600; min-height: 1.5em; font-variant-numeric: tabular-nums; }
+
+  /* Shortcut pad: the cheat sheet you can press */
+  .keys h2 { font-size: 1.35rem; letter-spacing: -0.015em; margin: 0 0 4px; }
+  .keys > p { margin: 0 0 18px; color: var(--ink-soft); font-size: .95rem; }
+  .group + .group { margin-top: 18px; }
+  .group h3 { font-size: .95rem; font-weight: 600; margin: 0 0 8px; color: var(--ink-soft); }
+  .pad { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .pad button {
+    display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 6px 12px; border: 0; border-radius: 10px;
+    background: var(--surface); color: var(--ink); font: 500 .92rem/1.2 var(--sans); text-align: left; cursor: pointer;
+    transition: background-color 160ms, color 160ms, transform 160ms var(--ease);
+  }
+  .pad button:hover { background: var(--surface-hover); }
+  .pad button:active { transform: scale(.97); }
+  .pad button.hit { background: var(--hit); color: var(--hit-ink); }
+  .pad kbd { font: 600 .95rem var(--sans); letter-spacing: .04em; min-width: 3.4em; white-space: nowrap; }
+  .note { font-size: .9rem; color: var(--ink-soft); margin: 24px 0 0; }
+
+  footer { max-width: 1520px; margin: 0 auto; padding: 96px 32px 48px; }
+  footer .name { font-size: clamp(2.6rem, 9vw, 8rem); font-weight: 700; letter-spacing: -0.045em; line-height: .95; margin: 0 0 28px; color: var(--accent); }
+  footer p { margin: 0 0 8px; max-width: 70ch; }
+  footer .small { color: var(--ink-soft); font-size: .92rem; }
+
+  /* Load-in: windows arrive one after another */
+  @keyframes rise { from { opacity: 0; transform: translateY(14px) scale(.98); } }
+  .intro > *, .win, .keys .group { animation: rise 520ms var(--ease) both; }
+  .intro > :nth-child(2) { animation-delay: 60ms; } .intro > :nth-child(3) { animation-delay: 120ms; }
+  .intro > :nth-child(4) { animation-delay: 180ms; } .intro > :nth-child(5) { animation-delay: 240ms; }
+  .win:nth-of-type(1) { animation-delay: 200ms; } .win:nth-of-type(2) { animation-delay: 290ms; } .win:nth-of-type(3) { animation-delay: 380ms; }
+  .keys .group:nth-of-type(2) { animation-delay: 80ms; } .keys .group:nth-of-type(3) { animation-delay: 160ms; } .keys .group:nth-of-type(4) { animation-delay: 240ms; }
+  @media (prefers-reduced-motion: reduce) { .intro > *, .win, .keys .group { animation: none; } }
+
+  @media (max-width: 1023px) {
+    .page { grid-template-columns: minmax(0, 1fr); grid-template-areas: "intro" "demo" "keys"; gap: 32px; }
+    .demo { position: static; }
+    .pad { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
+  }
+  @media (max-width: 600px) {
+    .page { padding: 28px 16px 0; }
+    footer { padding: 72px 16px 40px; }
+    .screen { aspect-ratio: 1 / 1; border-radius: 12px; }
+    .menubar .menu { display: none; }
+    .win { font-size: 11px; }
+    .body { padding: 8px 10px; }
+    .bar { height: 26px; padding: 0 8px; gap: 5px; }
+    .dot { width: 9px; height: 9px; }
+    .bar span:last-child { margin-right: 0; }
+    .pad { grid-template-columns: 1fr 1fr; }
+    .pad button { flex-direction: column; align-items: flex-start; gap: 2px; padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="intro">
+    <svg viewBox="0 0 1024 1024" role="img" aria-label="Rectangle Ultra icon">
+      <defs><linearGradient id="ru-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0F766E"/><stop offset="1" stop-color="#0B1F24"/></linearGradient></defs>
+      <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#ru-bg)"/>
+      <rect x="236" y="276" width="330" height="472" rx="40" fill="#FFFFFF"/>
+      <rect x="598" y="276" width="190" height="220" rx="36" fill="#5EEAD4"/>
+      <path d="M638 676 L693 616 L748 676" fill="none" stroke="#FFFFFF" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <h1>Rectangle Ultra</h1>
+    <p class="pitch">Move and resize Mac windows with a keystroke, or by dragging them to an edge. Free and open source.</p>
+    <div class="actions">
+      <a class="btn primary" href="https://github.com/esoteric-frog/RectangleUltra/releases/latest">Download for Mac</a>
+      <a class="btn" href="https://github.com/esoteric-frog/RectangleUltra">View on GitHub</a>
+    </div>
+    <p class="meta">macOS 14 or later. No account, no telemetry.</p>
+  </header>
+
+  <section class="demo" aria-labelledby="demo-h">
+    <h2 id="demo-h" class="vh">Try it in your browser</h2>
+    <div class="screen" id="screen">
+      <div class="menubar" aria-hidden="true">
+        <b>Notes</b><span class="menu">File</span><span class="menu">Edit</span><span class="menu">Window</span>
+        <span class="right">
+          <svg viewBox="0 0 22 22"><rect x="2" y="4" width="18" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="5" y="7" width="7" height="8" rx="1" fill="currentColor"/><path d="M14 13.5 L15.75 11.5 L17.5 13.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="clock"></span>
+        </span>
+      </div>
+      <div class="area" id="area">
+        <div class="preview" id="preview"></div>
+        <div class="win" data-name="Notes" data-r=".05,.07,.42,.58" tabindex="0" role="group" aria-label="Notes window">
+          <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span>Notes</span></div>
+          <div class="body">
+            <p class="t">Saturday</p>
+            <p>Pick up the bike from the shop before noon.</p>
+            <p>Call about the flat on Elm Street, ask if the kitchen gets morning light.</p>
+            <p>Finish the travel budget and send it round before Sunday dinner.</p>
+          </div>
+        </div>
+        <div class="win" data-name="Downloads" data-r=".55,.1,.39,.5" tabindex="0" role="group" aria-label="Downloads window">
+          <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span>Downloads</span></div>
+          <div class="body">
+            <ul class="files">
+              <li>Rectangle Ultra.zip <small>2 MB</small></li>
+              <li>Boarding pass.pdf <small>180 KB</small></li>
+              <li>Garden plan.png <small>3 MB</small></li>
+              <li>Recipes <small>Folder</small></li>
+              <li>Tax 2025 <small>Folder</small></li>
+            </ul>
+          </div>
+        </div>
+        <div class="win term" data-name="Terminal" data-r=".3,.36,.46,.52" tabindex="0" role="group" aria-label="Terminal window">
+          <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span>Terminal</span></div>
+          <div class="body">$ make app
+$ make install
+$ open -a "Rectangle Ultra"
+$ _</div>
+        </div>
+      </div>
+    </div>
+    <div class="under">
+      <p class="hint">Click a window, then press <b>⌃⌥←</b> (Control, Option, Left). Press it again to cycle through 1/2, 2/3 and 1/3. Or drag a title bar to an edge or corner.</p>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="keys" aria-labelledby="keys-h">
+    <h2 id="keys-h">Shortcuts</h2>
+    <p>The real defaults. Press them on your keyboard, or tap them here.</p>
+    <div class="group"><h3>Halves</h3><div class="pad">
+      <button type="button" data-a="left-half"><kbd>⌃⌥←</kbd>Left half</button>
+      <button type="button" data-a="right-half"><kbd>⌃⌥→</kbd>Right half</button>
+      <button type="button" data-a="top-half"><kbd>⌃⌥↑</kbd>Top half</button>
+      <button type="button" data-a="bottom-half"><kbd>⌃⌥↓</kbd>Bottom half</button>
+    </div></div>
+    <div class="group"><h3>Corners</h3><div class="pad">
+      <button type="button" data-a="top-left"><kbd>⌃⌥U</kbd>Top left</button>
+      <button type="button" data-a="top-right"><kbd>⌃⌥I</kbd>Top right</button>
+      <button type="button" data-a="bottom-left"><kbd>⌃⌥J</kbd>Bottom left</button>
+      <button type="button" data-a="bottom-right"><kbd>⌃⌥K</kbd>Bottom right</button>
+    </div></div>
+    <div class="group"><h3>Thirds</h3><div class="pad">
+      <button type="button" data-a="first-third"><kbd>⌃⌥D</kbd>First third</button>
+      <button type="button" data-a="center-third"><kbd>⌃⌥F</kbd>Center third</button>
+      <button type="button" data-a="last-third"><kbd>⌃⌥G</kbd>Last third</button>
+      <button type="button" data-a="first-two-thirds"><kbd>⌃⌥E</kbd>First two-thirds</button>
+      <button type="button" data-a="last-two-thirds"><kbd>⌃⌥T</kbd>Last two-thirds</button>
+    </div></div>
+    <div class="group"><h3>Whole window</h3><div class="pad">
+      <button type="button" data-a="maximize"><kbd>⌃⌥↩</kbd>Maximize</button>
+      <button type="button" data-a="center"><kbd>⌃⌥C</kbd>Center</button>
+      <button type="button" data-a="restore"><kbd>⌃⌥⌫</kbd>Restore</button>
+    </div></div>
+    <p class="note">On your Mac, ⌃⌥⌘← and ⌃⌥⌘→ also send a window to the previous or next display. If Rectangle is already running here, it catches these keys first: use the buttons instead.</p>
+  </section>
+</main>
+
+<footer>
+  <p class="name">Rectangle Ultra</p>
+  <p>Built on <a href="https://github.com/rxhanson/Rectangle">Rectangle</a> by Ryan Hanson, under the MIT license. Every shortcut on this page is his design, and we are grateful for it.</p>
+  <p class="small">Not affiliated with Rectangle, Rectangle Pro or their developer.</p>
+</footer>
+
+<script>
+(() => {
+  const area = document.getElementById('area');
+  const preview = document.getElementById('preview');
+  const statusEl = document.getElementById('status');
+  const GAP = 3; // px of breathing room on each side of a window
+
+  // Rect = fractions of the usable screen {x, y, w, h}
+  const fixed = {
+    'top-left': [0, 0, .5, .5], 'top-right': [.5, 0, .5, .5],
+    'bottom-left': [0, .5, .5, .5], 'bottom-right': [.5, .5, .5, .5],
+    'first-third': [0, 0, 1/3, 1], 'center-third': [1/3, 0, 1/3, 1], 'last-third': [2/3, 0, 1/3, 1],
+    'first-two-thirds': [0, 0, 2/3, 1], 'last-two-thirds': [1/3, 0, 2/3, 1],
+    'maximize': [0, 0, 1, 1],
+  };
+  const CYCLE = [1/2, 2/3, 1/3]; // repeated presses, like Rectangle
+  const FRAC = ['1/2', '2/3', '1/3'];
+  const labels = {
+    'left-half': 'Left half', 'right-half': 'Right half', 'top-half': 'Top half', 'bottom-half': 'Bottom half',
+    'top-left': 'Top left', 'top-right': 'Top right', 'bottom-left': 'Bottom left', 'bottom-right': 'Bottom right',
+    'first-third': 'First third', 'center-third': 'Center third', 'last-third': 'Last third',
+    'first-two-thirds': 'First two-thirds', 'last-two-thirds': 'Last two-thirds',
+    'maximize': 'Maximize', 'center': 'Center', 'restore': 'Restore',
+  };
+  const keys = {
+    ArrowLeft: 'left-half', ArrowRight: 'right-half', ArrowUp: 'top-half', ArrowDown: 'bottom-half',
+    Enter: 'maximize', NumpadEnter: 'maximize', KeyC: 'center', Backspace: 'restore',
+    KeyU: 'top-left', KeyI: 'top-right', KeyJ: 'bottom-left', KeyK: 'bottom-right',
+    KeyD: 'first-third', KeyF: 'center-third', KeyG: 'last-third', KeyE: 'first-two-thirds', KeyT: 'last-two-thirds',
+  };
+
+  const wins = [...area.querySelectorAll('.win')].map(el => {
+    const [x, y, w, h] = el.dataset.r.split(',').map(Number);
+    return { el, name: el.dataset.name, r: { x, y, w, h }, restore: null, last: null, step: 0 };
+  });
+  let order = wins.slice();
+  let active = wins[wins.length - 1];
+
+  function put(el, r) {
+    el.style.left = `calc(${r.x * 100}% + ${GAP}px)`;
+    el.style.top = `calc(${r.y * 100}% + ${GAP}px)`;
+    el.style.width = `calc(${r.w * 100}% - ${GAP * 2}px)`;
+    el.style.height = `calc(${r.h * 100}% - ${GAP * 2}px)`;
+  }
+  function activate(win) {
+    active = win;
+    order = order.filter(w => w !== win).concat(win);
+    order.forEach((w, i) => { w.el.style.zIndex = i + 1; w.el.classList.toggle('active', w === win); });
+    document.querySelector('.menubar b').textContent = win.name;
+  }
+  function say(text) { statusEl.textContent = text; }
+
+  // The rect an action produces, and the cycle step it used.
+  function target(win, name, cycle) {
+    const r = win.r;
+    if (fixed[name]) { const [x, y, w, h] = fixed[name]; return { x, y, w, h }; }
+    if (name === 'center') return { x: (1 - r.w) / 2, y: (1 - r.h) / 2, w: r.w, h: r.h };
+    const s = CYCLE[cycle];
+    if (name === 'left-half') return { x: 0, y: 0, w: s, h: 1 };
+    if (name === 'right-half') return { x: 1 - s, y: 0, w: s, h: 1 };
+    if (name === 'top-half') return { x: 0, y: 0, w: 1, h: s };
+    if (name === 'bottom-half') return { x: 0, y: 1 - s, w: 1, h: s };
+  }
+
+  function run(name, win = active, fromDrag = false) {
+    if (name === 'restore') {
+      if (!win.restore) { say(`${win.name}: nothing to restore yet`); return; }
+      win.r = win.restore; win.restore = null; win.last = null;
+      put(win.el, win.r); say(`${win.name}: restored`); return;
+    }
+    const cycles = name.endsWith('-half');
+    win.step = (!fromDrag && cycles && win.last === name) ? (win.step + 1) % 3 : 0;
+    if (!win.restore) win.restore = { ...win.r };
+    win.r = target(win, name, win.step);
+    win.last = fromDrag ? null : name;
+    put(win.el, win.r);
+    say(`${win.name}: ${labels[name]}${cycles ? ', ' + FRAC[win.step] : ''}`);
+  }
+
+  function flash(name) {
+    const b = document.querySelector(`.pad [data-a="${name}"]`);
+    if (!b) return;
+    b.classList.add('hit');
+    clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('hit'), 450);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (!e.ctrlKey || !e.altKey || e.shiftKey) return;
+    if (e.metaKey) {
+      if (e.code === 'ArrowLeft' || e.code === 'ArrowRight') {
+        e.preventDefault(); say('This page has one display. On your Mac, that key sends the window to the next one.');
+      }
+      return;
+    }
+    const name = keys[e.code];
+    if (!name) return;
+    e.preventDefault();
+    run(name); flash(name);
+  });
+
+  document.querySelectorAll('.pad button').forEach(b =>
+    b.addEventListener('click', () => { run(b.dataset.a); flash(b.dataset.a); }));
+
+  wins.forEach(win => {
+    put(win.el, win.r);
+    win.el.addEventListener('pointerdown', () => activate(win));
+    win.el.addEventListener('focus', () => activate(win));
+    win.el.querySelector('.bar').addEventListener('pointerdown', e => startDrag(e, win));
+  });
+  activate(active);
+
+  // Drag-to-edge snapping
+  function zone(lx, ly, W, H) {
+    const E = Math.max(10, W * .025), C = Math.max(28, Math.min(W, H) * .1);
+    const L = lx <= E, R = lx >= W - E, T = ly <= E, B = ly >= H - E;
+    if ((L && ly < C) || (T && lx < C)) return 'top-left';
+    if ((R && ly < C) || (T && lx > W - C)) return 'top-right';
+    if ((L && ly > H - C) || (B && lx < C)) return 'bottom-left';
+    if ((R && ly > H - C) || (B && lx > W - C)) return 'bottom-right';
+    if (L) return 'left-half';
+    if (R) return 'right-half';
+    if (T) return 'maximize';
+    if (B) return lx < W / 3 ? 'first-third' : lx < W * 2 / 3 ? 'center-third' : 'last-third';
+    return null;
+  }
+
+  function startDrag(e, win) {
+    if (e.button !== 0) return;
+    e.preventDefault();
+    activate(win);
+    const bar = e.currentTarget;
+    bar.setPointerCapture(e.pointerId);
+    const A = area.getBoundingClientRect();
+    const box = win.el.getBoundingClientRect();
+    let offX = e.clientX - box.left, offY = e.clientY - box.top;
+    const before = { ...win.r }, oldRestore = win.restore;
+    let moved = false, z = null;
+
+    function move(ev) {
+      const lx = ev.clientX - A.left, ly = ev.clientY - A.top;
+      if (!moved) {
+        if (Math.hypot(ev.clientX - e.clientX, ev.clientY - e.clientY) < 4) return;
+        moved = true;
+        win.el.classList.add('dragging');
+        // Dragging a snapped window off its spot gives back its old size, like Rectangle.
+        if (win.restore) {
+          const ratio = offX / box.width;
+          win.r = { ...win.r, w: win.restore.w, h: win.restore.h };
+          offX = ratio * win.r.w * A.width;
+          win.restore = null;
+        }
+      }
+      const x = Math.min(Math.max((lx - offX) / A.width, -win.r.w + .1), .9);
+      const y = Math.min(Math.max((ly - offY) / A.height, 0), .9);
+      win.r = { ...win.r, x, y };
+      put(win.el, win.r);
+      z = zone(lx, ly, A.width, A.height);
+      if (z) { put(preview, target(win, z, 0)); preview.classList.add('on'); }
+      else preview.classList.remove('on');
+    }
+    function up() {
+      bar.removeEventListener('pointermove', move);
+      bar.removeEventListener('pointerup', up);
+      bar.removeEventListener('pointercancel', up);
+      win.el.classList.remove('dragging');
+      preview.classList.remove('on');
+      if (!moved) return;
+      win.last = null;
+      if (z) { win.restore = oldRestore || before; run(z, win, true); flash(z); }
+      else say(`${win.name}: moved`);
+    }
+    bar.addEventListener('pointermove', move);
+    bar.addEventListener('pointerup', up);
+    bar.addEventListener('pointercancel', up);
+  }
+
+  // Menu bar clock
+  const clock = document.getElementById('clock');
+  const tick = () => { clock.textContent = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }); };
+  tick(); setInterval(tick, 30000);
+})();
+</script>
+</body>
+</html>

@@ -1,22 +1,35 @@
 # Contributing
 
-## Feature Requests
+Thanks for helping. Rectangle Ultra is a small fork of [Rectangle](https://github.com/rxhanson/Rectangle), and small, focused changes are the easiest to review.
 
-Rectangle is not accepting any new feature requests at this time, sorry. You can file a feature request for a feature that you plan to implement and submit a pull request for, so that the feature can be reviewed and you will know ahead of time if the feature will be rejected.  
+## Build and test
 
-## Bugs
+You need macOS 14 or later and the Command Line Tools (`xcode-select --install`). You do not need Xcode.
 
-Please search through the existing issues, open and closed, before filing a new bug.
-Add the version of Rectangle, the version of the OS, and screenshots or videos as necessary.
+```bash
+make app        # builds build/Rectangle Ultra.app
+make install    # builds and copies it to /Applications
+make test       # runs the test suite
+```
 
-## Coding Style
+Run `make test` before you open a pull request. CI runs the same command.
 
-Please match the existing coding style as much as possible.
+## Pull requests
+
+- Keep each pull request small and about one thing.
+- Match the existing code style.
+- Add or update a test when you change behavior.
+- Do not add Xcode project files (`.xcodeproj`, `.xcworkspace`). The project builds with SwiftPM and `make` only.
+- Describe what you changed and how you checked it.
+
+## Bugs and ideas
+
+Search the existing issues first, open and closed. For a bug, include the Rectangle Ultra version, your macOS version, and what you expected versus what happened. For a feature, open an issue before you write code so we can agree on the idea first.
+
+## Security
+
+Do not open a public issue for a vulnerability. See [SECURITY.md](SECURITY.md).
 
 ## License
 
-By contributing to Rectangle you agree that your contributions will be licensed under its MIT license.
-
-## Incentives
-
-Logic from Rectangle is used in the [Multitouch](https://multitouch.app) app. The [Rectangle Pro](https://rectangleapp.com/pro) app is entirely built on top of Rectangle. If you contribute significant code or localizations that get merged into Rectangle, you get a free license of Multitouch or Rectangle Pro. Contributors to Sparkle, MASShortcut, or Spectacle can also receive free Multitouch or Rectangle Pro licenses (just send me an email).
+By contributing you agree that your contributions are licensed under the MIT license in [LICENSE](LICENSE). Rectangle Ultra builds on Rectangle by Ryan Hanson (MIT); keep that credit intact.

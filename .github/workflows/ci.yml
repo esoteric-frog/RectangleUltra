@@ -1,0 +1,16 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Use the Command Line Tools (same as a local build, no Xcode)
+        run: sudo xcode-select -s /Library/Developer/CommandLineTools
+      - run: swift --version
+      - run: make test

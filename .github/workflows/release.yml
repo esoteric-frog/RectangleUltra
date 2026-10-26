@@ -1,0 +1,19 @@
+name: Release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Use the Command Line Tools (same as a local build, no Xcode)
+        run: sudo xcode-select -s /Library/Developer/CommandLineTools
+      - run: make test
+      - run: make app
+      - run: ditto -c -k --keepParent "build/Rectangle Ultra.app" RectangleUltra.zip
+      - run: gh release create "$GITHUB_REF_NAME" RectangleUltra.zip --title "Rectangle Ultra $GITHUB_REF_NAME" --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}

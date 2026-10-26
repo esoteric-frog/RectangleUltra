@@ -1,35 +1,22 @@
 # Security Policy
 
-Rectangle is maintained by a single developer. While I take security seriously, I appreciate your patience and responsible disclosure to help protect Rectangle users.
+## Supported versions
 
-## Supported Versions
-
-Security fixes are applied only to the latest stable release.
+Security fixes go into the latest release only.
 
 | Version | Supported |
 | ------- | --------- |
-| Latest  | ✅ Yes    |
-| All Past| ❌ No     |
+| Latest  | Yes       |
+| Older   | No        |
 
-## Scope and Privileges
+## What the app does
 
-Rectangle requires **macOS Accessibility Permissions** (`AXUIElement`) to manage windows. 
+Rectangle Ultra needs the macOS Accessibility permission to move and resize windows. It runs locally. It has no auto-updater, no telemetry and no account, and it does not collect or send window layouts, keystrokes or personal data.
 
-* **Local Only:** Rectangle runs entirely locally. It never collects, logs, or transmits window layouts, keystrokes, or personal data.
-* **Network Access:** Limited strictly to checking for updates via the Sparkle framework (if enabled).
+## Reporting a vulnerability
 
-## Reporting a Vulneraging / Contact
+Please do not open a public issue for a security problem.
 
-**Please do not open a public GitHub issue or discussion for security bugs.**
+Use GitHub's private vulnerability reporting: open the **Security** tab of this repository and choose **Report a vulnerability**. Include what the issue is and its impact, steps to reproduce it, and your Rectangle Ultra and macOS versions.
 
-If you find a vulnerability, please report it privately:
-
-* **Email:** ryan@ryanhanson.dev
-
-### Please Include:
-1. A brief description of the issue and potential impact.
-2. Step-by-step instructions (or a proof-of-concept script) to reproduce it.
-3. Your version of Rectangle and macOS.
-
-I will review your report and respond within 48 hours to coordinate a patch and public disclosure.
-
+This is a small project maintained in spare time. Expect a first reply within about a week.

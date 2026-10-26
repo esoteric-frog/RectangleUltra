@@ -1,6 +1,6 @@
-# Rectangle Terminal Commands for Hidden Preferences
+# Rectangle Ultra Terminal Commands for Hidden Preferences
 
-The preferences window is purposefully slim, but there's a lot that can be modified via Terminal. After executing a terminal command, restart the app as these values are loaded on application startup. For Rectangle Pro, please replace `com.knollsoft.Rectangle` with `com.knollsoft.Hookshot` for the following commands. A number of the commands below are for configuring keyboard shortcuts, and you'll need to know the key code and modifier flags integer values. You can use the free [key codes app](https://apps.apple.com/us/app/key-codes/id414568915) to help with this.
+The preferences window is purposefully slim, but there's a lot that can be modified via Terminal. After executing a terminal command, restart the app as these values are loaded on application startup. A number of the commands below are for configuring keyboard shortcuts, and you'll need to know the key code and modifier flags integer values. You can use the free [key codes app](https://apps.apple.com/us/app/key-codes/id414568915) to help with this.
 
 ## Contents
 
@@ -53,7 +53,7 @@ The preferences window is purposefully slim, but there's a lot that can be modif
 If you wish to change the default shortcuts after first launch click "Restore Default Shortcuts" in the settings tab of the preferences window. Alternatively, you can set it with the following terminal command followed by app restart. True is for the recommended shortcuts, false is for Spectacle's.
 
 ```bash
-defaults write com.knollsoft.Rectangle alternateDefaultShortcuts -bool true
+defaults write local.rectangleultra alternateDefaultShortcuts -bool true
 ```
 
 ## Adjust Behavior on Repeated Commands
@@ -64,7 +64,7 @@ If this setting is not checked, then each time you execute a half or quarter act
 The cycling behavior can be disabled entirely with:
 
 ```bash
-defaults write com.knollsoft.Rectangle subsequentExecutionMode -int 2
+defaults write local.rectangleultra subsequentExecutionMode -int 2
 ```
 
 `subsequentExecutionMode` accepts the following values:
@@ -81,7 +81,7 @@ defaults write com.knollsoft.Rectangle subsequentExecutionMode -int 2
 Set Center Half to cycle thirds sizes: 1/2 -> 2/3 -> 1/3 with:
 
 ```bash
-defaults write com.knollsoft.Rectangle centerHalfCycles -int 1
+defaults write local.rectangleultra centerHalfCycles -int 1
 ```
 
 ## Resize on Directional Move
@@ -94,7 +94,7 @@ This size will cycle between 1/2 -> 2/3 -> 1/3 of the screen’s width/height.
 Note that if subsequent execution mode is set to cycle displays when this is enabled, Move Left and Move Right will always resize to 1/2, and pressing it again will move to the next display.
 
 ```bash
-defaults write com.knollsoft.Rectangle resizeOnDirectionalMove -bool true
+defaults write local.rectangleultra resizeOnDirectionalMove -bool true
 ```
 
 ## Make the half actions tile like Windows or KDE
@@ -108,7 +108,7 @@ By default, Left Half, Right Half, Top Half and Bottom Half always give the wind
 - Windows that are not tiled, and halves that get their own action again, behave as usual (repeated executions still cycle sizes or move across displays, depending on the setting for repeated commands).
 
 ```bash
-defaults write com.knollsoft.Rectangle halvesPreserveOtherAxisSize -bool true
+defaults write local.rectangleultra halvesPreserveOtherAxisSize -bool true
 ```
 
 ## Adjust macOS Ventura Stage Manager size
@@ -116,13 +116,13 @@ defaults write com.knollsoft.Rectangle halvesPreserveOtherAxisSize -bool true
 By default, the Stage Manager area will be set to 190, if enabled.
 
 ```bash
-defaults write com.knollsoft.Rectangle stageSize -float <VALUE>
+defaults write local.rectangleultra stageSize -float <VALUE>
 ```
 
 To set it to a proportion of your screen's width, set it to a value between 0 and 1.
 
 ```bash
-defaults write com.knollsoft.Rectangle stageSize -float <VALUE_BETWEEN_0_AND_1>
+defaults write local.rectangleultra stageSize -float <VALUE_BETWEEN_0_AND_1>
 ```
 
 ## Make Center respect the Stage Manager strip
@@ -130,7 +130,7 @@ defaults write com.knollsoft.Rectangle stageSize -float <VALUE_BETWEEN_0_AND_1>
 By default, Center and the extra centering with prominence command ignore the Stage Manager strip and center the window on the full width of the screen, even while the other actions leave room for the strip. Enable this to have those two commands leave room for it too:
 
 ```bash
-defaults write com.knollsoft.Rectangle alwaysAccountForStage -bool true
+defaults write local.rectangleultra alwaysAccountForStage -bool true
 ```
 
 This only affects those two commands. Like every other action, they only leave room for the strip while it is actually showing with windows in it, so this is not a way to keep a permanent gap on that side of the screen; for that, see [Setting gaps at the screen edges](#setting-gaps-at-the-screen-edges).
@@ -140,7 +140,7 @@ This only affects those two commands. Like every other action, they only leave r
 See the [wiki](https://github.com/rxhanson/Rectangle/wiki/Todo-Mode) for more info.
 
 ```bash
-defaults write com.knollsoft.Rectangle todo -int 1
+defaults write local.rectangleultra todo -int 1
 ```
 
 ## Only allow drag-to-snap when modifier keys are pressed
@@ -158,7 +158,7 @@ Modifier keys can be combined by adding the sum of Integer Values together.
 This command would be for restricting snap to the cmd key:
 
 ```bash
-defaults write com.knollsoft.Rectangle snapModifiers -int 1048576
+defaults write local.rectangleultra snapModifiers -int 1048576
 ```
 
 ## Almost Maximize
@@ -166,11 +166,11 @@ defaults write com.knollsoft.Rectangle snapModifiers -int 1048576
 By default, "Almost Maximize" will resize the window to 90% of the screen (width & height).
 
 ```bash
-defaults write com.knollsoft.Rectangle almostMaximizeHeight -float <VALUE_BETWEEN_0_&_1>
+defaults write local.rectangleultra almostMaximizeHeight -float <VALUE_BETWEEN_0_&_1>
 ```
 
 ```bash
-defaults write com.knollsoft.Rectangle almostMaximizeWidth -float <VALUE_BETWEEN_0_&_1>
+defaults write local.rectangleultra almostMaximizeWidth -float <VALUE_BETWEEN_0_&_1>
 ```
 
 ## Repeated Maximize restores the previous size and position
@@ -180,7 +180,7 @@ By default, executing "Maximize" or "Almost Maximize" on a window that is alread
 This can also be toggled with the "Repeated Maximize restores the previous size and position" checkbox at the bottom of the "Extras" popover in the General tab of the Settings window.
 
 ```bash
-defaults write com.knollsoft.Rectangle repeatedMaximizeRestoresPrevious -bool true
+defaults write local.rectangleultra repeatedMaximizeRestoresPrevious -bool true
 ```
 
 ## Add an extra centering command with custom size
@@ -188,12 +188,12 @@ defaults write com.knollsoft.Rectangle repeatedMaximizeRestoresPrevious -bool tr
 This extra command is not available in the UI. You'll need to know which keycode and modifier flags you want.
 
 ```bash
-defaults write com.knollsoft.Rectangle specified -dict-add keyCode -float 8 modifierFlags -float 1966080
+defaults write local.rectangleultra specified -dict-add keyCode -float 8 modifierFlags -float 1966080
 ```
 
 ```bash
-defaults write com.knollsoft.Rectangle specifiedHeight -float 1050
-defaults write com.knollsoft.Rectangle specifiedWidth -float 1680
+defaults write local.rectangleultra specifiedHeight -float 1050
+defaults write local.rectangleultra specifiedWidth -float 1680
 ```
 
 ## Add an extra centering with prominence command
@@ -207,7 +207,7 @@ The key code is:
 For example, the command for setting the shortcut to `ctrl option command C` would be:
 
 ```bash
-defaults write com.knollsoft.Rectangle centerProminently -dict-add keyCode -float 8 modifierFlags -float 1835305
+defaults write local.rectangleultra centerProminently -dict-add keyCode -float 8 modifierFlags -float 1835305
 ```
 
 
@@ -230,7 +230,7 @@ The key codes are:
 For example, the command for setting the top left ninth shortcut to `ctrl opt shift 1` would be:
 
 ```bash
-defaults write com.knollsoft.Rectangle topLeftNinth -dict-add keyCode -float 18 modifierFlags -float 917504
+defaults write local.rectangleultra topLeftNinth -dict-add keyCode -float 18 modifierFlags -float 917504
 ```
 
 ## Add extra "eighths" sizing commands
@@ -251,7 +251,7 @@ The key codes are:
 For example, the command for setting the top left eighth shortcut to `ctrl opt shift 1` would be:
 
 ```bash
-defaults write com.knollsoft.Rectangle topLeftEighth -dict-add keyCode -float 18 modifierFlags -float 917504
+defaults write local.rectangleultra topLeftEighth -dict-add keyCode -float 18 modifierFlags -float 917504
 ```
 
 ## Add extra "full-height eighths" sizing commands
@@ -272,7 +272,7 @@ The key codes are:
 For example, the command for setting the first vertical eighth shortcut to `ctrl opt shift 1` would be:
 
 ```bash
-defaults write com.knollsoft.Rectangle firstVerticalEighth -dict-add keyCode -float 18 modifierFlags -float 917504
+defaults write local.rectangleultra firstVerticalEighth -dict-add keyCode -float 18 modifierFlags -float 917504
 ```
 
 Repeating `firstVerticalEighth` cycles forward through all 8 positions. Repeating `lastVerticalEighth` cycles through them in reverse when repeated-command behavior is enabled.
@@ -293,7 +293,7 @@ The key codes are:
 For example, the command for setting the first vertical sixth shortcut to `ctrl opt shift 1` would be:
 
 ```bash
-defaults write com.knollsoft.Rectangle firstVerticalSixth -dict-add keyCode -float 18 modifierFlags -float 917504
+defaults write local.rectangleultra firstVerticalSixth -dict-add keyCode -float 18 modifierFlags -float 917504
 ```
 
 Repeating `firstVerticalSixth` cycles forward through all 6 positions. Repeating `lastVerticalSixth` cycles through them in reverse when repeated-command behavior is enabled.
@@ -314,7 +314,7 @@ The key codes are:
 For example, the command for setting the top left two-thirds shortcut to `ctrl opt shift 1` would be:
 
 ```bash
-defaults write com.knollsoft.Rectangle topLeftThird -dict-add keyCode -float 18 modifierFlags -float 917504
+defaults write local.rectangleultra topLeftThird -dict-add keyCode -float 18 modifierFlags -float 917504
 ```
 
 ## Add doubling/halving window sizing commands
@@ -337,7 +337,7 @@ The action direction (e.g., "Right") is the direction that the center of the win
 For example, the command for setting the doubleWidthRight shortcut to `ctrl option shift right` would be:
 
 ```bash
-defaults write com.knollsoft.Rectangle doubleWidthRight -dict-add keyCode -float 124 modifierFlags -float 11403555
+defaults write local.rectangleultra doubleWidthRight -dict-add keyCode -float 124 modifierFlags -float 11403555
 ```
 
 ## Add additional tiling and cascading commands
@@ -360,7 +360,7 @@ _tileActiveApp_ tiles only windows belonging to the currently active (foremost) 
 For example, the command for setting the cascadeActiveApp shortcut to `ctrl shift 2` would be:
 
 ```bash
-defaults write com.knollsoft.Rectangle cascadeActiveApp -dict-add keyCode -float 2 modifierFlags -float 393475
+defaults write local.rectangleultra cascadeActiveApp -dict-add keyCode -float 2 modifierFlags -float 393475
 ```
 
 ## Modify the "footprint" displayed for drag to snap area
@@ -368,31 +368,31 @@ defaults write com.knollsoft.Rectangle cascadeActiveApp -dict-add keyCode -float
 Adjust the alpha (transparency). Default is 0.3, or 0 for the blurred preview, where it controls tint opacity.
 
 ```bash
-defaults write com.knollsoft.Rectangle footprintAlpha -float <VALUE_BETWEEN_0_&_1>
+defaults write local.rectangleultra footprintAlpha -float <VALUE_BETWEEN_0_&_1>
 ```
 
 Change the border width. Default is 2 (used to be 1), or 1 for the blurred preview. A custom value overrides either default.
 
 ```bash
-defaults write com.knollsoft.Rectangle footprintBorderWidth -float <NUM_PIXELS>
+defaults write local.rectangleultra footprintBorderWidth -float <NUM_PIXELS>
 ```
 
 Disable the fade.
 
 ```bash
-defaults write com.knollsoft.Rectangle footprintFade -int 2
+defaults write local.rectangleultra footprintFade -int 2
 ```
 
 Change the color. With blur enabled, this sets the tint color. Delete `footprintColor` to restore the automatic light/dark tint color.
 
 ```bash
-defaults write com.knollsoft.Rectangle footprintColor -string "{\"red\":0,\"blue\":0.5,\"green\":0.5}"
+defaults write local.rectangleultra footprintColor -string "{\"red\":0,\"blue\":0.5,\"green\":0.5}"
 ```
 
 Change the animation duration. The value is a multiplier. Default is 0 (no movement animation).
 
 ```bash
-defaults write com.knollsoft.Rectangle footprintAnimationDurationMultiplier -float <MULTIPLIER>
+defaults write local.rectangleultra footprintAnimationDurationMultiplier -float <MULTIPLIER>
 ```
 
 ## Move Up/Down/Left/Right: Don't center on edge
@@ -400,7 +400,7 @@ defaults write com.knollsoft.Rectangle footprintAnimationDurationMultiplier -flo
 By default, the directional move will center the window along the edge that the window is being moved to.
 
 ```bash
-defaults write com.knollsoft.Rectangle centeredDirectionalMove -int 2
+defaults write local.rectangleultra centeredDirectionalMove -int 2
 ```
 
 ## Make Smaller limits
@@ -410,11 +410,11 @@ By default, "Make Smaller" will decrease the window until it reaches 25% of the 
 Set either value to `0` to disable Rectangle's screen-relative limit for that dimension and rely on the application's native minimum size.
 
 ```bash
-defaults write com.knollsoft.Rectangle minimumWindowWidth -float <VALUE_BETWEEN_0_&_1>
+defaults write local.rectangleultra minimumWindowWidth -float <VALUE_BETWEEN_0_&_1>
 ```
 
 ```bash
-defaults write com.knollsoft.Rectangle minimumWindowHeight -float <VALUE_BETWEEN_0_&_1>
+defaults write local.rectangleultra minimumWindowHeight -float <VALUE_BETWEEN_0_&_1>
 ```
 
 ## Make Smaller/Make Larger size increments
@@ -422,7 +422,7 @@ defaults write com.knollsoft.Rectangle minimumWindowHeight -float <VALUE_BETWEEN
 By default, "Make Smaller" and "Make Larger" change the window height/width by 30 pixels.
 
 ```bash
-defaults write com.knollsoft.Rectangle sizeOffset -float <NUM_PIXELS>
+defaults write local.rectangleultra sizeOffset -float <NUM_PIXELS>
 ```
 
 ## Make Smaller/Make Larger "curtain resize" with gaps
@@ -430,7 +430,7 @@ defaults write com.knollsoft.Rectangle sizeOffset -float <NUM_PIXELS>
 By default, windows touching the edge of the screen will keep those shared edges the same while only resizing the non-shared edge. With window gaps, this is a little ambiguous since the edges don't actually touch the screen, so you can disable it for traditional, floating resizing:
 
 ```bash
-defaults write com.knollsoft.Rectangle curtainChangeSize -int 2
+defaults write local.rectangleultra curtainChangeSize -int 2
 ```
 
 ## Make Smaller/Make Larger width only
@@ -440,8 +440,8 @@ By default, "Make Smaller" and "Make Larger" change both, the window height and 
 For example, if you want to assign `ctrl option ]` to _largerWidth_ and `ctrl option [` to _smallerWidth_, the commands would be:
 
 ```bash
-defaults write com.knollsoft.Rectangle largerWidth -dict-add keyCode -float 30 modifierFlags -float 786432
-defaults write com.knollsoft.Rectangle smallerWidth -dict-add keyCode -float 33 modifierFlags -float 786432
+defaults write local.rectangleultra largerWidth -dict-add keyCode -float 30 modifierFlags -float 786432
+defaults write local.rectangleultra smallerWidth -dict-add keyCode -float 33 modifierFlags -float 786432
 ```
 
 ## Make Smaller/Make Larger height only
@@ -451,8 +451,8 @@ Similarly, if you only want to change the window height without changing window 
 For example, if you want to assign `ctrl option shift ]` to _largerHeight_ and `ctrl option shift [` to _smallerHeight_, the commands would be:
 
 ```bash
-defaults write com.knollsoft.Rectangle largerHeight -dict-add keyCode -float 30 modifierFlags -float 917504
-defaults write com.knollsoft.Rectangle smallerHeight -dict-add keyCode -float 33 modifierFlags -float 917504
+defaults write local.rectangleultra largerHeight -dict-add keyCode -float 30 modifierFlags -float 917504
+defaults write local.rectangleultra smallerHeight -dict-add keyCode -float 33 modifierFlags -float 917504
 ```
 
 ## Make Smaller shrink the height of full-height windows
@@ -460,13 +460,13 @@ defaults write com.knollsoft.Rectangle smallerHeight -dict-add keyCode -float 33
 By default, "Make Smaller" keeps the height of a window that spans the full height of the screen (for example after "Half" or "Maximize Height") and only shrinks its width. Enable this to shrink the height as well:
 
 ```bash
-defaults write com.knollsoft.Rectangle smallerShrinksMaximizedHeight -bool true
+defaults write local.rectangleultra smallerShrinksMaximizedHeight -bool true
 ```
 
 ## Disabling window restore when moving windows
 
 ```bash
-defaults write com.knollsoft.Rectangle unsnapRestore -int 2
+defaults write local.rectangleultra unsnapRestore -int 2
 ```
 
 ## Disabling window restore when moving windows sized by "Make Smaller" or "Make Larger"
@@ -474,7 +474,7 @@ defaults write com.knollsoft.Rectangle unsnapRestore -int 2
 Keeps the window restore behavior above for everything else:
 
 ```bash
-defaults write com.knollsoft.Rectangle unsnapRestoreFromSizeChange -int 2
+defaults write local.rectangleultra unsnapRestoreFromSizeChange -int 2
 ```
 
 ## Changing the margin for the snap areas
@@ -482,10 +482,10 @@ defaults write com.knollsoft.Rectangle unsnapRestoreFromSizeChange -int 2
 Each margin is configured separately, and has a default value of 5
 
 ```bash
-defaults write com.knollsoft.Rectangle snapEdgeMarginTop -int 10
-defaults write com.knollsoft.Rectangle snapEdgeMarginBottom -int 10
-defaults write com.knollsoft.Rectangle snapEdgeMarginLeft -int 10
-defaults write com.knollsoft.Rectangle snapEdgeMarginRight -int 10
+defaults write local.rectangleultra snapEdgeMarginTop -int 10
+defaults write local.rectangleultra snapEdgeMarginBottom -int 10
+defaults write local.rectangleultra snapEdgeMarginLeft -int 10
+defaults write local.rectangleultra snapEdgeMarginRight -int 10
 ```
 
 ## Snapping before reaching screen edges
@@ -493,38 +493,38 @@ defaults write com.knollsoft.Rectangle snapEdgeMarginRight -int 10
 The “Snap before reaching screen edges” toggle sets `snapBeforeReachingEdges` to 20 points when enabled and 0 when disabled. A custom distance can be set with:
 
 ```bash
-defaults write com.knollsoft.Rectangle snapBeforeReachingEdges -float 30
+defaults write local.rectangleultra snapBeforeReachingEdges -float 30
 ```
 
-Restart Rectangle after changing the value. A positive distance overrides the `snapEdgeMargin` values on exposed outer edges, even when those margins are larger. Shared display boundaries and corner targets retain their existing margins. Set the distance to 0 to return to the configured edge margins.
+Restart Rectangle Ultra after changing the value. A positive distance overrides the `snapEdgeMargin` values on exposed outer edges, even when those margins are larger. Shared display boundaries and corner targets retain their existing margins. Set the distance to 0 to return to the configured edge margins.
 
 ## Setting gaps at the screen edges
 
 You can specify gaps at the edges of your screen that will be left uncovered by window resizing operations. This is useful if, for example, you use a dock replacement that should not have windows overlapping it.
 
 ```bash
-defaults write com.knollsoft.Rectangle screenEdgeGapTop -int 10
-defaults write com.knollsoft.Rectangle screenEdgeGapBottom -int 10
-defaults write com.knollsoft.Rectangle screenEdgeGapLeft -int 10
-defaults write com.knollsoft.Rectangle screenEdgeGapRight -int 10
+defaults write local.rectangleultra screenEdgeGapTop -int 10
+defaults write local.rectangleultra screenEdgeGapBottom -int 10
+defaults write local.rectangleultra screenEdgeGapLeft -int 10
+defaults write local.rectangleultra screenEdgeGapRight -int 10
 ```
 
 You can also separately specify the gap for a screen with a notch. Useful for multi display setups if you are using a menubar replacement. When this is set, it replaces `screenEdgeGapTop` on screens with a notch, so a value of `0` removes the top gap on those screens.
 
 ```bash
-defaults write com.knollsoft.Rectangle screenEdgeGapTopNotch -int 5
+defaults write local.rectangleultra screenEdgeGapTopNotch -int 5
 ```
 
 To go back to using `screenEdgeGapTop` on screens with a notch:
 
 ```bash
-defaults delete com.knollsoft.Rectangle screenEdgeGapTopNotch
+defaults delete local.rectangleultra screenEdgeGapTopNotch
 ```
 
 If you want these gaps to be applied on your main screen only you can set screenEdgeGapsOnMainScreenOnly. Useful for multi display setups where only one screen has some dock replacement.
 
 ```bash
-defaults write com.knollsoft.Rectangle screenEdgeGapsOnMainScreenOnly -bool true
+defaults write local.rectangleultra screenEdgeGapsOnMainScreenOnly -bool true
 ```
 
 ## Ignore specific drag to snap areas
@@ -549,13 +549,13 @@ Each drag to snap area on the edge of a screen can be ignored with a single Term
 To disable the top (maximize) snap area, execute:
 
 ```bash
-defaults write com.knollsoft.Rectangle ignoredSnapAreas -int 1
+defaults write local.rectangleultra ignoredSnapAreas -int 1
 ```
 
 To disable the Top Half and Bottom Half snap areas, the bit field would be 1111 0000 0000, or 3840
 
 ```bash
-defaults write com.knollsoft.Rectangle ignoredSnapAreas -int 3840
+defaults write local.rectangleultra ignoredSnapAreas -int 3840
 ```
 
 ## Disabling gaps when maximizing
@@ -565,13 +565,13 @@ By default, the "Gaps between windows" setting applies to "Maximize" and "Maximi
 To disable the gaps for "Maximize", execute:
 
 ```bash
-defaults write com.knollsoft.Rectangle applyGapsToMaximize -int 2
+defaults write local.rectangleultra applyGapsToMaximize -int 2
 ```
 
 To disable the gaps for "Maximize Height", execute:
 
 ```bash
-defaults write com.knollsoft.Rectangle applyGapsToMaximizeHeight -int 2
+defaults write local.rectangleultra applyGapsToMaximizeHeight -int 2
 ```
 
 ## Enabling snap areas for sixths
@@ -579,7 +579,7 @@ defaults write com.knollsoft.Rectangle applyGapsToMaximizeHeight -int 2
 To enable snap areas for sixths corners, execute: 
 
 ```bash
-defaults write com.knollsoft.Rectangle sixthsSnapArea -bool true
+defaults write local.rectangleultra sixthsSnapArea -bool true
 ```
 
 Once enabled, you can drag a window to the corner, then move it along the edge towards the thirds area to snap to a sixth.
@@ -589,7 +589,7 @@ Once enabled, you can drag a window to the corner, then move it along the edge t
 There's an option in the UI for moving the cursor with the window when going across displays, but here's an option for moving it with any shortcut:
 
 ```bash
-defaults write com.knollsoft.Rectangle moveCursor -int 1
+defaults write local.rectangleultra moveCursor -int 1
 ```
 
 ## Control Enhanced UI handling
@@ -599,7 +599,7 @@ Some apps enable the macOS `AXEnhancedUserInterface` accessibility mode. Rectang
 Rectangle uses automatic handling by default: it restores Enhanced UI for other apps, but leaves it disabled after Rectangle window actions, when known Chromium browser families activate, and when one is already frontmost as Rectangle starts. VoiceOver and Switch Control keep the prior restore behavior. The behavior can be overridden with:
 
 ```bash
-defaults write com.knollsoft.Rectangle enhancedUI -int <MODE>
+defaults write local.rectangleultra enhancedUI -int <MODE>
 ```
 
 `enhancedUI` accepts the following values:
@@ -622,19 +622,19 @@ Windows that are slowly moved above the menu bar will still go into Mission Cont
 Once this is enabled, the checkbox for it is visible in the Snap Areas tab of the Preferences window.
 
 ```bash
-defaults write com.knollsoft.Rectangle missionControlDragging -int 2
+defaults write local.rectangleultra missionControlDragging -int 2
 ```
 
 Change the allowed off-screen distance. The value is in pixels and is tied to the speed. Default is 25.
 
 ```bash
-defaults write com.knollsoft.Rectangle missionControlDraggingAllowedOffscreenDistance -float <DISTANCE>
+defaults write local.rectangleultra missionControlDraggingAllowedOffscreenDistance -float <DISTANCE>
 ```
 
 Change the disallowed duration. The value is in milliseconds. Default is 250.
 
 ```bash
-defaults write com.knollsoft.Rectangle missionControlDraggingDisallowedDuration -int <DURATION>
+defaults write local.rectangleultra missionControlDraggingDisallowedDuration -int <DURATION>
 ```
 
 ## Change the behavior of double-click window title bar
@@ -642,19 +642,19 @@ defaults write com.knollsoft.Rectangle missionControlDraggingDisallowedDuration 
 To change the action ([list](https://github.com/rxhanson/Rectangle/blob/master/Rectangle/WindowAction.swift)):
 
 ```bash
-defaults write com.knollsoft.Rectangle doubleClickTitleBar -int <ACTION_ID + 1>
+defaults write local.rectangleultra doubleClickTitleBar -int <ACTION_ID + 1>
 ```
 
 To disable restore when double-clicked again:
 
 ```bash
-defaults write com.knollsoft.Rectangle doubleClickTitleBarRestore -int 2
+defaults write local.rectangleultra doubleClickTitleBarRestore -int 2
 ```
 
 To disable double-click window title bar only for specific bundle ids (in example, Outlook):
 
 ```bash
-defaults write com.knollsoft.Rectangle doubleClickTitleBarIgnoredApps -string "[\"com.microsoft.Outlook\"]"
+defaults write local.rectangleultra doubleClickTitleBarIgnoredApps -string "[\"com.microsoft.Outlook\"]"
 ```
 
 ## Change the order of displays to order by x coordinate for next and prev displays commands
@@ -662,7 +662,7 @@ defaults write com.knollsoft.Rectangle doubleClickTitleBarIgnoredApps -string "[
 By default, display order is left-to-right, line-by-line. You can change this to be ordered by x coordinate, left-to-right, regardless of which vertical position of the display. This was the default behavior prior to v0.87.
 
 ```bash
-defaults write com.knollsoft.Rectangle screensOrderedByX -int 1
+defaults write local.rectangleultra screensOrderedByX -int 1
 ```
 
 ## Keep window size when moving a maximized window to another display
@@ -670,13 +670,13 @@ defaults write com.knollsoft.Rectangle screensOrderedByX -int 1
 By default, moving a maximized window to the next or previous display re-maximizes it to fill the destination display. Disable this to keep the window's size and center it on the destination display instead (so a window maximized on a smaller display won't grow to fill a larger one). This can also be toggled from Settings via the "Maximize window when moved to another display" checkbox.
 
 ```bash
-defaults write com.knollsoft.Rectangle autoMaximize -int 2
+defaults write local.rectangleultra autoMaximize -int 2
 ```
 
 To restore the default behavior:
 
 ```bash
-defaults write com.knollsoft.Rectangle autoMaximize -int 0
+defaults write local.rectangleultra autoMaximize -int 0
 ```
 
 ## Repeat the last Rectangle action when moving to another display
@@ -684,13 +684,13 @@ defaults write com.knollsoft.Rectangle autoMaximize -int 0
 By default, moving a window to the next, previous, or a specific display keeps the spot it had on the source display (Settings > Behavior > "Keep window position when moving across displays"). Enable this to replay the last Rectangle action on the destination display instead, when there is one: a window that was snapped to the left half of the source display is snapped to the left half of the destination display, so it is resized to match the new display rather than keeping its size. With "Keep window position" turned off, a window with no action to replay is mapped proportionally from the source display to the destination display instead of being centered. This is off by default.
 
 ```bash
-defaults write com.knollsoft.Rectangle attemptMatchOnNextPrevDisplay -int 1
+defaults write local.rectangleultra attemptMatchOnNextPrevDisplay -int 1
 ```
 
 To disable it again:
 
 ```bash
-defaults write com.knollsoft.Rectangle attemptMatchOnNextPrevDisplay -int 2
+defaults write local.rectangleultra attemptMatchOnNextPrevDisplay -int 2
 ```
 
 ## Offset cycling position when overlapping another window
@@ -698,19 +698,19 @@ defaults write com.knollsoft.Rectangle attemptMatchOnNextPrevDisplay -int 2
 When cycling through grid positions (sixths, eighths, ninths, twelfths, sixteenths, or quarters with quadrant cycling mode), the target position may land exactly on top of another window, hiding it completely. Enable this to apply a small offset when an overlap is detected, so you can see there's a window underneath.
 
 ```bash
-defaults write com.knollsoft.Rectangle cyclingOverlapOffset -bool true
+defaults write local.rectangleultra cyclingOverlapOffset -bool true
 ```
 
 The default offset is 11pt. To customize the offset size:
 
 ```bash
-defaults write com.knollsoft.Rectangle cyclingOverlapOffsetSize -float 16
+defaults write local.rectangleultra cyclingOverlapOffsetSize -float 16
 ```
 
 By default, only one cascade layer is shown (the original window plus one offset). To allow more layers:
 
 ```bash
-defaults write com.knollsoft.Rectangle cyclingOverlapMaxCascade -int 3
+defaults write local.rectangleultra cyclingOverlapMaxCascade -int 3
 ```
 
 ## Show a badge with the stacked windows when hovering over a grid corner
@@ -718,7 +718,7 @@ defaults write com.knollsoft.Rectangle cyclingOverlapMaxCascade -int 3
 When multiple windows are stacked at the same grid position, resting the cursor on that position's top-left corner shows a small badge with the stack count and a list of the window names. Clicking a name brings that window forward.
 
 ```bash
-defaults write com.knollsoft.Rectangle stackBadge -bool true
+defaults write local.rectangleultra stackBadge -bool true
 ```
 
 ## Move windows that can't fill the snap area to the edge
@@ -726,20 +726,20 @@ defaults write com.knollsoft.Rectangle stackBadge -bool true
 Some windows can't be resized to fill a snap area — either because they're a fixed size, or because they're resizable but have a maximum size or a fixed aspect ratio (FaceTime is a common example). By default such a window aligns to the snap area's screen edge(s): a right-half snap anchors flush right, a corner snap anchors into the corner, and the window stays centered on any axis it can't fill. To choose a different behavior:
 
 ```bash
-defaults write com.knollsoft.Rectangle moveFixedSizeToEdge -int 1  # align edges and corners (default)
-defaults write com.knollsoft.Rectangle moveFixedSizeToEdge -int 2  # align corners only, center halves/sides
-defaults write com.knollsoft.Rectangle moveFixedSizeToEdge -int 3  # center within the snap area
-defaults write com.knollsoft.Rectangle moveFixedSizeToEdge -int 4  # keep windows at the snap area's top-left
+defaults write local.rectangleultra moveFixedSizeToEdge -int 1  # align edges and corners (default)
+defaults write local.rectangleultra moveFixedSizeToEdge -int 2  # align corners only, center halves/sides
+defaults write local.rectangleultra moveFixedSizeToEdge -int 3  # center within the snap area
+defaults write local.rectangleultra moveFixedSizeToEdge -int 4  # keep windows at the snap area's top-left
 ```
 
 Mode `4` keeps constrained windows at the snap area's top-left. For video windows such as IINA, this keeps left/right snaps top-aligned as you cycle through sizes.
 
 Narrower windows stay at the snap area's left edge, even for right-side snaps. Gaps still apply, and Rectangle may shift the window to keep it on screen.
 
-Restart Rectangle after changing this preference. To restore the default:
+Restart Rectangle Ultra after changing this preference. To restore the default:
 
 ```bash
-defaults delete com.knollsoft.Rectangle moveFixedSizeToEdge
+defaults delete local.rectangleultra moveFixedSizeToEdge
 ```
 
 ## Apps using native resize during window animations
@@ -749,5 +749,5 @@ Certain applications (such as IINA) enforce aspect ratios or custom constraints 
 The default list contains IINA (`com.colliderli.iina`). You can configure this list of bundle IDs:
 
 ```bash
-defaults write com.knollsoft.Rectangle directAnimationNativeResizeApps -string "[\"com.colliderli.iina\", \"org.videolan.vlc\"]"
+defaults write local.rectangleultra directAnimationNativeResizeApps -string "[\"com.colliderli.iina\", \"org.videolan.vlc\"]"
 ```
