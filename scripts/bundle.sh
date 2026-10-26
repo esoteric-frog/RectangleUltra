@@ -4,6 +4,8 @@ set -euo pipefail
 cd "${0:A:h}/.."
 CONFIG=${1:-release}
 APP="build/Rectangle Ultra.app"
+ID=local.rectangleultra
+if [[ $CONFIG == debug ]]; then ID+=.debug; fi  # debug builds get their own permission + prefs
 swift build -c "$CONFIG" --product RectangleUltra
 BIN=$(swift build -c "$CONFIG" --show-bin-path)
 rm -rf "$APP"
@@ -12,7 +14,7 @@ cp "$BIN/RectangleUltra" "$APP/Contents/MacOS/Rectangle Ultra"
 cp -R "$BIN/MASShortcut_MASShortcut.bundle" "$APP/Contents/Resources/"
 sed -e 's/$(DEVELOPMENT_LANGUAGE)/en/' \
     -e 's/$(EXECUTABLE_NAME)/Rectangle Ultra/' \
-    -e 's/$(PRODUCT_BUNDLE_IDENTIFIER)/local.rectangleultra/' \
+    -e "s/\$(PRODUCT_BUNDLE_IDENTIFIER)/$ID/" \
     -e 's/$(PRODUCT_NAME)/Rectangle Ultra/' \
     -e 's/$(MARKETING_VERSION)/0.1.0/' \
     -e 's/$(CURRENT_PROJECT_VERSION)/112/' \

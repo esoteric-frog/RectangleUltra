@@ -4,8 +4,9 @@ import Foundation
 import MASShortcut
 
 extension Defaults {
-    static func encoded() -> String? {
-        guard let version = Bundle.main.infoDictionary?["CFBundleVersion"] as? String else { return nil }
+    static func encoded(version: String? = Bundle.main.infoDictionary?["CFBundleVersion"] as? String) -> String? {
+        // version is a parameter so tests can run outside the app bundle, where Info.plist has no CFBundleVersion.
+        guard let version else { return nil }
         
         var shortcuts = [String: Shortcut]()
         for action in WindowAction.active {

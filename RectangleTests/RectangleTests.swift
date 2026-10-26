@@ -1448,7 +1448,7 @@ final class FootprintAlphaDefaultsTests: XCTestCase {
     }
 
     private func exportedAlpha() throws -> CodableDefault {
-        let json = try XCTUnwrap(Defaults.encoded())
+        let json = try XCTUnwrap(Defaults.encoded(version: "1"))
         let config = try XCTUnwrap(Defaults.convert(jsonString: json))
         return try XCTUnwrap(config.defaults[Defaults.footprintAlpha.key])
     }
@@ -1978,7 +1978,7 @@ final class ScreenEdgeGapTests: XCTestCase {
     }
 
     private func exportedNotchGap() throws -> CodableDefault {
-        let json = try XCTUnwrap(Defaults.encoded())
+        let json = try XCTUnwrap(Defaults.encoded(version: "1"))
         let config = try XCTUnwrap(Defaults.convert(jsonString: json))
         return try XCTUnwrap(config.defaults[Defaults.screenEdgeGapTopNotch.key])
     }
@@ -2019,14 +2019,15 @@ class DefaultsExportTests: XCTestCase {
 
 final class BundleIdentityTests: XCTestCase {
 
-    func testDebugBuildsUseTheirOwnBundleIdentifier() {
-        // Keeps a build from Xcode from sharing the installed app's
+    func testDebugBuildsUseTheirOwnBundleIdentifier() throws {
+        // Keeps a debug build (make debug) from sharing the installed app's
         // Accessibility permission and preferences.
+        try XCTSkipUnless(Bundle.main.bundlePath.hasSuffix(".app"), "needs the debug app as test host; swift test runs outside an app bundle")
         XCTAssertEqual(Bundle.main.bundleIdentifier, "local.rectangleultra.debug")
     }
 
     func testExportedConfigKeepsTheReleaseBundleIdentifier() throws {
-        let json = try XCTUnwrap(Defaults.encoded())
+        let json = try XCTUnwrap(Defaults.encoded(version: "1"))
         let config = try XCTUnwrap(Defaults.convert(jsonString: json))
         XCTAssertEqual(config.bundleId, "local.rectangleultra")
     }
@@ -2137,7 +2138,7 @@ class ConfigImportTests: XCTestCase {
         let mouseButton = MouseButtonShortcut(buttonNumber: 4, modifierFlags: [])
         store(Shortcut(masShortcut: mouseButton), forKey: action.name)
 
-        let config = try XCTUnwrap(Defaults.encoded().flatMap { Defaults.convert(jsonString: $0) })
+        let config = try XCTUnwrap(Defaults.encoded(version: "1").flatMap { Defaults.convert(jsonString: $0) })
 
         let exportedShortcut = try XCTUnwrap(config.shortcuts[action.name])
         XCTAssertEqual(exportedShortcut.keyCode, mouseButton.keyCode)

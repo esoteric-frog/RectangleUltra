@@ -211,7 +211,7 @@ import XCTestShim
 }
 
 @Suite(.serialized) struct BundleIdentityTests_Generated {
-    @Test func testDebugBuildsUseTheirOwnBundleIdentifier() async throws { try await XCTestCase.runTest(BundleIdentityTests.self) { t in MainActor.assumeIsolated { t.testDebugBuildsUseTheirOwnBundleIdentifier() } } }
+    @Test func testDebugBuildsUseTheirOwnBundleIdentifier() async throws { try await XCTestCase.runTest(BundleIdentityTests.self) { t in try MainActor.assumeIsolated { try t.testDebugBuildsUseTheirOwnBundleIdentifier() } } }
     @Test func testExportedConfigKeepsTheReleaseBundleIdentifier() async throws { try await XCTestCase.runTest(BundleIdentityTests.self) { t in try MainActor.assumeIsolated { try t.testExportedConfigKeepsTheReleaseBundleIdentifier() } } }
 }
 
