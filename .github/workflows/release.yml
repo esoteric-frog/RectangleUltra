@@ -8,7 +8,7 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: Use the Command Line Tools (same as a local build, no Xcode)
         run: sudo xcode-select -s /Library/Developer/CommandLineTools
       - run: make test
