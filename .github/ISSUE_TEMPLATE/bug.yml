@@ -1,0 +1,30 @@
+name: Bug
+description: Something does not work as expected
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what you got.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Rectangle Ultra version
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version
+      placeholder: "15.1"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Hold Option while the app menu is open and choose "View Logging...". Paste what you see.
