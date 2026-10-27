@@ -10,6 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - run: make test
+      - run: brew install librsvg  # rsvg-convert renders the app icon
       - run: make app
       - run: ditto -c -k --keepParent "build/Rectangle Ultra.app" RectangleUltra.zip
       - run: gh release create "$GITHUB_REF_NAME" RectangleUltra.zip --title "Rectangle Ultra $GITHUB_REF_NAME" --generate-notes
